@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Relatórios | Turmas</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="logo">Horários</div>
+    <nav class="menu">
+      <a href="/admin/dashboard">Dashboard</a>
+      <a href="#">Professores</a>
+      <a href="#">Turmas</a>
+      <a href="/admin/disciplinas/nova">Disciplinas</a>
+      <a href="#">Estudantes</a>
+      <a class="active" href="/admin/relatorios/turmas">Relatórios</a>
+      <a href="#">Configurações</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <header class="topbar">
+      <div><h1>Relatórios de Turmas</h1><p>Visualize, edite ou exclua turmas cadastradas.</p></div>
+    </header>
+
+    <div class="panel">
+      <h3>Turmas cadastradas</h3>
+      <div class="table-wrapper">
+        <table class="table">
+          <thead><tr><th>ID</th><th>Nome</th><th>Disciplina</th><th>Professor</th><th>Status</th><th>Ações</th></tr></thead>
+          <tbody>
+            <% if (turmas.length === 0) { %>
+              <tr><td colspan="6">Nenhuma turma cadastrada.</td></tr>
+            <% } %>
+            <% turmas.forEach(turma => { %>
+              <tr>
+                <td><%= turma.id %></td>
+                <td><%= turma.nome %></td>
+                <td><%= turma.disciplina || '-' %></td>
+                <td><%= turma.professor || '-' %></td>
+                <td><span class="badge <%= turma.ativa ? 'active' : 'inactive' %>"><%= turma.ativa ? 'Ativa' : 'Inativa' %></span></td>
+                <td class="actions">
+                  <a class="btn-edit" href="/admin/relatorios/turmas/<%= turma.id %>/editar">Editar</a>
+                  <form action="/admin/relatorios/turmas/<%= turma.id %>/excluir" method="POST" onsubmit="return confirm('Excluir esta turma?')">
+                    <button class="btn-delete" type="submit">Excluir</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,7 @@
+{
+  "name":"horarios-app",
+  "version":"1.0.0",
+  "main":"app.js",
+  "scripts":{"start":"node app.js"},
+  "dependencies":{"dotenv":"latest","ejs":"latest","express":"latest","pg":"latest","pg-hstore":"latest","sequelize":"latest"}
+}

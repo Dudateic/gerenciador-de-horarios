@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Nova Disciplina</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="logo">Horários</div>
+    <nav class="menu">
+      <a href="/admin/dashboard">Dashboard</a>
+      <a href="#">Professores</a>
+      <a href="#">Turmas</a>
+      <a class="active" href="/admin/disciplinas/nova">Disciplinas</a>
+      <a href="#">Estudantes</a>
+      <a href="/admin/relatorios/turmas">Relatórios</a>
+      <a href="#">Configurações</a>
+    </nav>
+  </aside>
+
+  <main class="content form-page">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Nova Matéria</h2>
+        <a href="/admin/dashboard" class="close">×</a>
+      </div>
+
+      <form action="/admin/disciplinas/nova" method="POST">
+        <label>Nome da Matéria</label>
+        <input type="text" name="nome" placeholder="Ex.: Cálculo Diferencial e Integral I" required>
+
+        <div class="form-grid">
+          <div>
+            <label>Código</label>
+            <input type="text" name="codigo" placeholder="Ex.: MAT101" required>
+          </div>
+          <div>
+            <label>Semestre</label>
+            <select name="semestre" required>
+              <option value="">Selecione</option>
+              <% for(let i = 1; i <= 10; i++) { %>
+                <option value="<%= i %>º Semestre"><%= i %>º Semestre</option>
+              <% } %>
+            </select>
+          </div>
+        </div>
+
+        <label>Coordenador</label>
+        <input type="text" name="coordenador" placeholder="Digite o nome do coordenador">
+
+        <label>Pré-requisito</label>
+        <input type="text" name="prerequisito" placeholder="+ Adicionar pré-requisito">
+
+        <div class="form-actions">
+          <a href="/admin/dashboard" class="btn-cancel">Cancelar</a>
+          <button type="submit">Cadastrar</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+</body>
+</html>

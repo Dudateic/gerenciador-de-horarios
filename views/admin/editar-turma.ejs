@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Editar Turma</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="logo">Horários</div>
+    <nav class="menu">
+      <a href="/admin/dashboard">Dashboard</a>
+      <a href="#">Professores</a>
+      <a href="#">Turmas</a>
+      <a href="/admin/disciplinas/nova">Disciplinas</a>
+      <a href="#">Estudantes</a>
+      <a class="active" href="/admin/relatorios/turmas">Relatórios</a>
+      <a href="#">Configurações</a>
+    </nav>
+  </aside>
+
+  <main class="content form-page">
+    <div class="form-card">
+      <div class="form-header">
+        <h2>Editar Turma</h2>
+        <a href="/admin/relatorios/turmas" class="close">×</a>
+      </div>
+
+      <form action="/admin/relatorios/turmas/<%= turma.id %>/editar" method="POST">
+        <label>Nome da Turma</label>
+        <input type="text" name="nome" value="<%= turma.nome %>" required>
+
+        <label>Disciplina</label>
+        <input type="text" name="disciplina" value="<%= turma.disciplina || '' %>">
+
+        <label>Professor</label>
+        <input type="text" name="professor" value="<%= turma.professor || '' %>">
+
+        <div class="form-grid">
+          <div><label>Sala</label><input type="text" name="sala" value="<%= turma.sala || '' %>"></div>
+          <div><label>Dias</label><input type="text" name="dias" value="<%= turma.dias || '' %>"></div>
+        </div>
+
+        <label>Horário</label>
+        <input type="text" name="horario" value="<%= turma.horario || '' %>">
+
+        <div class="form-grid">
+          <div><label>Vagas</label><input type="number" name="vagas" value="<%= turma.vagas %>"></div>
+          <div><label>Vagas ocupadas</label><input type="number" name="vagasOcupadas" value="<%= turma.vagasOcupadas %>"></div>
+        </div>
+
+        <label class="check"><input type="checkbox" name="ativa" <%= turma.ativa ? 'checked' : '' %>> Turma ativa</label>
+
+        <div class="form-actions">
+          <a href="/admin/relatorios/turmas" class="btn-cancel">Cancelar</a>
+          <button type="submit">Salvar Alterações</button>
+        </div>
+      </form>
+    </div>
+  </main>
+</div>
+</body>
+</html>
