@@ -1,77 +1,88 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <title>Estudantes</title>
-    <link rel="stylesheet" href="/css/dashboard.css" />
-  </head>
-  <body>
-    <div class="container">
-      <aside class="sidebar">
-        <div class="logo">Horários</div>
+<head>
+  <meta charset="UTF-8" />
+  <title>Estudantes</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/form.css" />
+</head>
+<body>
+<div class="container">
+  <%- include('../partials/sidebar') %>
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <h1>Estudantes</h1>
+        <p>Cadastre, edite e acompanhe estudantes do curso.</p>
+      </div>
+    </header>
+    <%- include('../partials/messages') %>
 
-        <nav class="menu">
-          <a href="/admin/dashboard">Dashboard</a>
-          <a href="/admin/professores">Professores</a>
-          <a href="/admin/disciplinas-turmas">Disciplinas/Turmas</a>
-          <a class="active" href="/admin/estudantes">Estudantes</a>
-          <a href="/admin/relatorios/carga-docente">Relatórios</a>
-          <a href="/admin/configuracoes">Configurações</a>
-        </nav>
-      </aside>
-
-      <main class="content">
-        <header class="topbar">
-          <div>
-            <h1>Estudantes</h1>
-            <p>Estudantes cadastrados no sistema.</p>
+    <section class="grid">
+      <div class="panel">
+        <h3>Novo Estudante</h3>
+        <form action="/admin/estudantes" method="POST">
+          <label>Nome</label>
+          <input type="text" name="nome" required minlength="3" />
+          <div class="form-grid">
+            <div>
+              <label>Matrícula</label>
+              <input type="text" name="matricula" placeholder="Ex.: 202612345" />
+            </div>
+            <div>
+              <label>Semestre</label>
+              <input type="text" name="semestre" placeholder="Ex.: 2026.1" />
+            </div>
           </div>
-        </header>
+          <label>E-mail</label>
+          <input type="email" name="email" required />
+          <label>Senha inicial</label>
+          <input type="password" name="senha" placeholder="Opcional: padrão será matrícula ou 123456" />
+          <div class="form-actions"><button type="submit">Cadastrar Estudante</button></div>
+        </form>
+      </div>
 
-        <div class="panel">
-          <h3>Lista de estudantes</h3>
-
-          <div class="table-wrapper">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Nome</th>
-                  <th>Curso</th>
-                  <th>Cadastrado em</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <% if (!alunos || alunos.length === 0) { %>
-                <tr>
-                  <td colspan="5">Nenhum estudante cadastrado.</td>
-                </tr>
-                <% } else { %> <% alunos.forEach(aluno => { %>
-                <tr>
-                  <td><%= aluno.id %></td>
-                  <td><%= aluno.nome %></td>
-                  <td><%= aluno.curso || "-" %></td>
-                  <td>
-                    <%= aluno.createdAt ? aluno.createdAt.toLocaleDateString("pt-BR") : "-" %>
-                  </td>
-                  <td class="actions">
-                    <form
-                      action="/admin/estudantes/<%= aluno.id %>/excluir"
-                      method="POST"
-                      onsubmit="return confirm('Deseja excluir este estudante?');"
-                    >
-                      <button class="btn-delete" type="submit">Excluir</button>
-                    </form>
-                  </td>
-                </tr>
-                <% }) %> <% } %>
-              </tbody>
-            </table>
-          </div>
+      <div class="panel">
+        <h3>Lista de Estudantes</h3>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Matrícula</th>
+                <th>Semestre</th>
+                <th>Status</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (!alunos || alunos.length === 0) { %>
+              <tr><td colspan="6">Nenhum estudante cadastrado.</td></tr>
+              <% } else { alunos.forEach(aluno => { %>
+              <tr>
+                <td><%= aluno.id %></td>
+                <td>
+                  <strong><%= aluno.nome %></strong><br />
+                  <small><%= aluno.email || aluno.curso || '-' %></small>
+                </td>
+                <td><%= aluno.matricula || '-' %></td>
+                <td><%= aluno.semestre || '-' %></td>
+                <td><span class="badge <%= aluno.ativo ? 'active' : 'inactive' %>"><%= aluno.ativo ? 'Ativo' : 'Inativo' %></span></td>
+                <td class="actions">
+                  <a class="btn-edit" href="/admin/estudantes/<%= aluno.id %>/editar">Editar</a>
+                  <form action="/admin/estudantes/<%= aluno.id %>/excluir" method="POST" onsubmit="return confirm('Deseja excluir este estudante?');">
+                    <button class="btn-delete" type="submit">Excluir</button>
+                  </form>
+                </td>
+              </tr>
+              <% }) } %>
+            </tbody>
+          </table>
         </div>
-      </main>
-    </div>
-  </body>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
 </html>

@@ -1,1 +1,59 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Editar Turma</title><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/form.css"></head><body><div class="container"><%- include('../partials/sidebar') %><main class="content form-page"><div class="form-card"><div class="form-header"><h2>Editar Turma</h2><a href="/admin/relatorios/turmas" class="close">×</a></div><%- include('../partials/messages') %><form action="/admin/relatorios/turmas/<%= turma.id %>/editar" method="POST"><label>Nome da Turma</label><input type="text" name="nome" value="<%= turma.nome %>" required><label>Disciplina</label><input type="text" name="disciplina" value="<%= turma.disciplina || '' %>" required><label>Professor</label><input type="text" name="professor" value="<%= turma.professor || '' %>" required><div class="form-grid"><div><label>Sala</label><input type="text" name="sala" value="<%= turma.sala || '' %>"></div><div><label>Dias</label><input type="text" name="dias" value="<%= turma.dias || '' %>" required></div></div><label>Horário</label><input type="text" name="horario" value="<%= turma.horario || '' %>" required><div class="form-grid"><div><label>Vagas</label><input type="number" name="vagas" min="0" value="<%= turma.vagas || 0 %>"></div><div><label>Vagas ocupadas</label><input type="number" name="vagasOcupadas" min="0" value="<%= turma.vagasOcupadas || 0 %>"></div></div><label class="check"><input type="checkbox" name="ativa" <%= turma.ativa ? 'checked' : '' %>> Turma ativa</label><div class="form-actions"><a href="/admin/relatorios/turmas" class="btn-cancel">Cancelar</a><button type="submit">Salvar Alterações</button></div></form></div></main></div></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Turma</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/form.css" />
+</head>
+<body>
+<div class="container">
+  <%- include('../partials/sidebar') %>
+  <main class="content form-page">
+    <section class="form-card">
+      <div class="form-header">
+        <h2>Editar Turma</h2>
+        <a class="close" href="<%= origem === 'relatorios' ? '/admin/relatorios/turmas' : '/admin/disciplinas-turmas' %>">×</a>
+      </div>
+      <%- include('../partials/messages') %>
+      <form action="/admin/turmas/<%= turma.id %>/editar" method="POST">
+        <input type="hidden" name="origem" value="<%= origem || 'disciplinas-turmas' %>">
+        <label>Nome da turma</label>
+        <input name="nome" value="<%= turma.nome %>" required />
+        <label>Disciplina</label>
+        <input name="disciplina" value="<%= turma.disciplina %>" required />
+        <label>Professor</label>
+        <input name="professor" value="<%= turma.professor %>" required />
+        <div class="form-grid">
+          <div>
+            <label>Sala</label>
+            <input name="sala" value="<%= turma.sala || '' %>" />
+          </div>
+          <div>
+            <label>Dias</label>
+            <input name="dias" value="<%= turma.dias || '' %>" placeholder="Seg, Qua, Sex" required />
+          </div>
+        </div>
+        <label>Horário</label>
+        <input name="horario" value="<%= turma.horario || '' %>" placeholder="08:00 - 10:00" required />
+        <div class="form-grid">
+          <div>
+            <label>Vagas</label>
+            <input type="number" name="vagas" min="0" value="<%= turma.vagas || 0 %>" />
+          </div>
+          <div>
+            <label>Vagas ocupadas</label>
+            <input type="number" name="vagasOcupadas" min="0" value="<%= turma.vagasOcupadas || 0 %>" />
+          </div>
+        </div>
+        <label class="check"><input type="checkbox" name="ativa" <%= turma.ativa ? 'checked' : '' %> /> Turma ativa</label>
+        <div class="form-actions">
+          <a class="btn-cancel" href="<%= origem === 'relatorios' ? '/admin/relatorios/turmas' : '/admin/disciplinas-turmas' %>">Cancelar</a>
+          <button type="submit">Salvar Alterações</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+</html>

@@ -1,1 +1,46 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><title>Editar Estudante</title><link rel="stylesheet" href="/css/dashboard.css"><link rel="stylesheet" href="/css/form.css"></head><body><div class="container"><%- include('../partials/sidebar') %><main class="content form-page"><div class="form-card"><div class="form-header"><h2>Editar Estudante</h2><a href="/admin/estudantes" class="close">×</a></div><%- include('../partials/messages') %><form action="/admin/estudantes/<%= aluno.id %>/editar" method="POST"><label>Nome</label><input type="text" name="nome" value="<%= aluno.nome %>" required minlength="3"><label>Matrícula</label><input type="text" name="matricula" value="<%= aluno.matricula || '' %>"><label>E-mail</label><input type="email" name="email" value="<%= aluno.email || '' %>"><label>Semestre</label><select name="semestre"><option value="">Selecione</option><% for(let i = 1; i <= 10; i++) { const s = i + 'º Semestre'; %><option value="<%= s %>" <%= aluno.semestre === s ? 'selected' : '' %>><%= s %></option><% } %></select><label class="check"><input type="checkbox" name="ativo" <%= aluno.ativo ? 'checked' : '' %>> Estudante ativo</label><div class="form-actions"><a href="/admin/estudantes" class="btn-cancel">Cancelar</a><button type="submit">Salvar</button></div></form></div></main></div></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Estudante</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/form.css" />
+</head>
+<body>
+<div class="container">
+  <%- include('../partials/sidebar') %>
+  <main class="content form-page">
+    <section class="form-card">
+      <div class="form-header">
+        <h2>Editar Estudante</h2>
+        <a class="close" href="/admin/estudantes">×</a>
+      </div>
+      <%- include('../partials/messages') %>
+      <form action="/admin/estudantes/<%= aluno.id %>/editar" method="POST">
+        <label>Nome</label>
+        <input name="nome" value="<%= aluno.nome %>" required minlength="3" />
+        <div class="form-grid">
+          <div>
+            <label>Matrícula</label>
+            <input name="matricula" value="<%= aluno.matricula || '' %>" />
+          </div>
+          <div>
+            <label>Semestre</label>
+            <input name="semestre" value="<%= aluno.semestre || '' %>" placeholder="Ex.: 2026.1" />
+          </div>
+        </div>
+        <label>E-mail</label>
+        <input type="email" name="email" value="<%= aluno.email || '' %>" required />
+        <label>Nova senha</label>
+        <input type="password" name="senha" placeholder="Deixe vazio para manter a senha atual" />
+        <label class="check"><input type="checkbox" name="ativo" <%= aluno.ativo ? 'checked' : '' %> /> Estudante ativo</label>
+        <div class="form-actions">
+          <a class="btn-cancel" href="/admin/estudantes">Cancelar</a>
+          <button type="submit">Salvar Alterações</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+</html>
