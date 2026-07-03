@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Disciplinas e Turmas</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/form.css" />
+  </head>
+
+  <body>
+    <div class="container">
+      <%- include('../partials/sidebar') %>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Disciplinas e Turmas</h1>
+            <p>Cadastre disciplinas, pré-requisitos, correquisitos e turmas.</p>
+          </div>
+        </header>
+
+        <%- include('../partials/messages') %>
+
+        <section class="grid">
+          <div class="panel">
+            <h3>Nova Disciplina</h3>
+
+            <form action="/admin/disciplinas" method="POST">
+              <label>Nome da Disciplina</label>
+              <input
+                type="text"
+                name="nome"
+                placeholder="Ex.: Banco de Dados"
+                required
+                minlength="3"
+              />
+
+              <div class="form-grid">
+                <div>
+                  <label>Código</label>
+                  <input type="text" name="codigo" placeholder="Ex.: TEC404" required />
+                </div>
+
+                <div>
+                  <label>Semestre</label>
+                  <select name="semestre" required>
+                    <option value="">Selecione</option>
+
+                    <% for(let i = 1; i <= 10; i++) { %>
+                    <option value="<%= i %>"><%= i %>º Semestre</option>
+                    <% } %>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-grid">
+                <div>
+                  <label>Carga Horária</label>
+                  <input type="number" name="cargaHoraria" value="60" min="1" />
+                </div>
+
+                <div>
+                  <label>Coordenador</label>
+                  <input type="text" name="coordenador" placeholder="Nome do coordenador" />
+                </div>
+              </div>
+
+              <label>Pré-requisito</label>
+              <select name="prerequisitoId">
+                <option value="">Nenhum</option>
+
+                <% disciplinas.forEach(d => { %>
+                <option value="<%= d.id %>"><%= d.nome %> - <%= d.codigo %></option>
+                <% }) %>
+              </select>
+
+              <label>Correquisito</label>
+              <select name="correquisitoId">
+                <option value="">Nenhum</option>
+
+                <% disciplinas.forEach(d => { %>
+                <option value="<%= d.id %>"><%= d.nome %> - <%= d.codigo %></option>
+                <% }) %>
+              </select>
+
+              <div class="form-actions">
+                <button type="submit">Cadastrar Disciplina</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="panel">
+            <h3>Nova Turma</h3>
+
+            <form action="/admin/turmas" method="POST">
+              <label>Disciplina</label>
+              <select name="disciplina" required>
+                <option value="">Selecione uma disciplina</option>
+
+                <% disciplinas.forEach(disciplina => { %>
+                <option value="<%= disciplina.nome %>">
+                  <%= disciplina.nome %> — <%= disciplina.semestre %>º Semestre
+                </option>
+                <% }) %>
+              </select>
+
+              <label>Professor</label>
+              <select name="professor" required>
+                <option value="">Selecione um professor</option>
+
+                <% professores.forEach(professor => { %>
+                <option value="<%= professor.nome %>"><%= professor.nome %></option>
+                <% }) %>
+              </select>
+
+              <div class="form-grid">
+                <div>
+                  <label>Sala</label>
+                  <input type="text" name="sala" placeholder="Ex.: Lab 01" />
+                </div>
+
+                <div>
+                  <label>Vagas</label>
+                  <input type="number" name="vagas" min="0" placeholder="40" />
+                </div>
+              </div>
+
+              <label>Cor da Turma</label>
+              <div class="color-options">
+                <label>
+                  <input type="radio" name="cor" value="#2563eb" checked />
+                  <span style="background: #2563eb"></span>
+                </label>
+                <label>
+                  <input type="radio" name="cor" value="#7c3aed" />
+                  <span style="background: #7c3aed"></span>
+                </label>
+                <label>
+                  <input type="radio" name="cor" value="#10b981" />
+                  <span style="background: #10b981"></span>
+                </label>
+                <label>
+                  <input type="radio" name="cor" value="#ef4444" />
+                  <span style="background: #ef4444"></span>
+                </label>
+                <label>
+                  <input type="radio" name="cor" value="#f59e0b" />
+                  <span style="background: #f59e0b"></span>
+                </label>
+              </div>
+
+              <label>Dias da Semana</label>
+              <div class="days">
+                <label>
+                  <input type="checkbox" name="dias" value="Seg" />
+                  <span>Seg</span>
+                </label>
+                <label>
+                  <input type="checkbox" name="dias" value="Ter" />
+                  <span>Ter</span>
+                </label>
+                <label>
+                  <input type="checkbox" name="dias" value="Qua" />
+                  <span>Qua</span>
+                </label>
+                <label>
+                  <input type="checkbox" name="dias" value="Qui" />
+                  <span>Qui</span>
+                </label>
+                <label>
+                  <input type="checkbox" name="dias" value="Sex" />
+                  <span>Sex</span>
+                </label>
+              </div>
+
+              <div class="form-grid">
+                <div>
+                  <label>Início</label>
+                  <input type="time" name="horarioInicio" required />
+                </div>
+
+                <div>
+                  <label>Fim</label>
+                  <input type="time" name="horarioFim" required />
+                </div>
+              </div>
+
+              <div class="form-actions">
+                <button type="submit">Salvar Turma</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <div class="panel mt">
+          <h3>Disciplinas Cadastradas</h3>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Código</th>
+                  <th>Disciplina</th>
+                  <th>Semestre</th>
+                  <th>Carga</th>
+                  <th>Pré-requisito</th>
+                  <th>Correquisito</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% if (disciplinas.length === 0) { %>
+                <tr>
+                  <td colspan="6">Nenhuma disciplina cadastrada.</td>
+                </tr>
+                <% } %> <% disciplinas.forEach(d => { %>
+                <tr>
+                  <td><%= d.codigo %></td>
+                  <td><%= d.nome %></td>
+                  <td><%= d.semestre %>º Semestre</td>
+                  <td><%= d.cargaHoraria || 60 %>h</td>
+                  <td><%= d.prerequisito ? d.prerequisito.nome : "-" %></td>
+                  <td><%= d.correquisito ? d.correquisito.nome : "-" %></td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel mt">
+          <h3>Turmas Cadastradas</h3>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Disciplina</th>
+                  <th>Professor</th>
+                  <th>Dias</th>
+                  <th>Horário</th>
+                  <th>Sala</th>
+                  <th>Vagas</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% if (turmas.length === 0) { %>
+                <tr>
+                  <td colspan="6">Nenhuma turma cadastrada.</td>
+                </tr>
+                <% } %> <% turmas.forEach(turma => { %>
+                <tr>
+                  <td>
+                    <span class="color-dot"></span>
+                    <%= turma.disciplina || turma.nome %>
+                  </td>
+                  <td><%= turma.professor || "-" %></td>
+                  <td><%= turma.dias || "-" %></td>
+                  <td><%= turma.horario || "-" %></td>
+                  <td><%= turma.sala || "-" %></td>
+                  <td><%= turma.vagas || 0 %></td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

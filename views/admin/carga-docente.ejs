@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Relatório de Carga Docente</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/sidebar') %>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Relatório de Carga Docente</h1>
+            <p>Resumo da carga horária por professor.</p>
+          </div>
+          <a href="/admin/relatorios/turmas" class="btn-edit">Relatório de Turmas</a>
+        </header>
+        <div class="panel">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Professor</th>
+                <th>Disciplinas</th>
+                <th>Carga Semanal (h)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (professores.length === 0) { %>
+              <tr><td colspan="3">Nenhum professor cadastrado.</td></tr>
+              <% } %><% professores.forEach(professor => { %>
+              <tr>
+                <td><strong><%= professor.nome %></strong></td>
+                <td><%= professor.disciplinas || '-' %></td>
+                <td><strong><%= professor.cargaSemanal || 0 %>h</strong></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

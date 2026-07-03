@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Estudantes</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <div class="logo">Horários</div>
+
+        <nav class="menu">
+          <a href="/admin/dashboard">Dashboard</a>
+          <a href="/admin/professores">Professores</a>
+          <a href="/admin/disciplinas-turmas">Disciplinas/Turmas</a>
+          <a class="active" href="/admin/estudantes">Estudantes</a>
+          <a href="/admin/relatorios/carga-docente">Relatórios</a>
+          <a href="/admin/configuracoes">Configurações</a>
+        </nav>
+      </aside>
+
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Estudantes</h1>
+            <p>Estudantes cadastrados no sistema.</p>
+          </div>
+        </header>
+
+        <div class="panel">
+          <h3>Lista de estudantes</h3>
+
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Nome</th>
+                  <th>Curso</th>
+                  <th>Cadastrado em</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% if (!alunos || alunos.length === 0) { %>
+                <tr>
+                  <td colspan="5">Nenhum estudante cadastrado.</td>
+                </tr>
+                <% } else { %> <% alunos.forEach(aluno => { %>
+                <tr>
+                  <td><%= aluno.id %></td>
+                  <td><%= aluno.nome %></td>
+                  <td><%= aluno.curso || "-" %></td>
+                  <td>
+                    <%= aluno.createdAt ? aluno.createdAt.toLocaleDateString("pt-BR") : "-" %>
+                  </td>
+                  <td class="actions">
+                    <form
+                      action="/admin/estudantes/<%= aluno.id %>/excluir"
+                      method="POST"
+                      onsubmit="return confirm('Deseja excluir este estudante?');"
+                    >
+                      <button class="btn-delete" type="submit">Excluir</button>
+                    </form>
+                  </td>
+                </tr>
+                <% }) %> <% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

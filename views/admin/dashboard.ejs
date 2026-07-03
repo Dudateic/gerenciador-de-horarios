@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/sidebar') %>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Visão geral do sistema</p>
+          </div>
+          <select>
+            <option><%= dashboard.semestre %> Semestre</option>
+          </select>
+        </header>
+        <section class="cards">
+          <div class="card">
+            <span>Total Alunos</span>
+            <strong><%= dashboard.totalAlunos %></strong>
+            <small>Engenharia de Computação</small>
+          </div>
+          <div class="card">
+            <span>Professores Ativos</span>
+            <strong><%= dashboard.professoresAtivos %></strong>
+            <small>Docentes disponíveis</small>
+          </div>
+          <div class="card">
+            <span>Turmas Ativas</span>
+            <strong><%= dashboard.turmasAtivas %></strong>
+            <small>Ofertas em andamento</small>
+          </div>
+          <div class="card">
+            <span>Semestre Atual</span>
+            <strong><%= dashboard.semestre %></strong>
+            <small>2026</small>
+          </div>
+        </section>
+        <section class="grid">
+          <div class="panel">
+            <h3>Distribuição de Aulas por Período</h3>
+            <div class="chart-area">
+              <div class="donut periodo-donut">
+                <div class="donut-content">
+                  <strong>100%</strong>
+                  <span>Total</span>
+                </div>
+              </div>
+              <div class="legend">
+                <% dashboard.distribuicaoPeriodo.forEach(item => { %>
+                <div class="legend-item">
+                  <div class="legend-name">
+                    <span class="dot <%= item.cor %>"></span>
+                    <%= item.periodo %>
+                  </div>
+                  <strong><%= item.porcentagem %>%</strong>
+                </div>
+                <% }) %>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <h3>Resumo de Atividades</h3>
+            <div class="summary">
+              <div class="summary-row">
+                <span>Disciplinas cadastradas</span>
+                <strong><%= dashboard.disciplinasCadastradas %></strong>
+              </div>
+              <div class="summary-row">
+                <span>Matérias disponíveis</span>
+                <strong><%= dashboard.materiasDisponiveis %></strong>
+              </div>
+              <div class="summary-row">
+                <span>Ofertas ativas</span>
+                <strong><%= dashboard.ofertasAtivas %></strong>
+              </div>
+              <div class="summary-row">
+                <span>Matrículas realizadas</span>
+                <strong><%= dashboard.matriculasRealizadas %></strong>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

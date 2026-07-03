@@ -1,0 +1,147 @@
+.form-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.form-card {
+  width: 100%;
+  max-width: 720px;
+  background: #fff;
+  border: 1px solid #edf1f5;
+  border-radius: 22px;
+  padding: 32px;
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.08);
+}
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 26px;
+}
+.form-header h2 {
+  font-size: 22px;
+  color: #111827;
+}
+.close {
+  text-decoration: none;
+  font-size: 28px;
+  color: #64748b;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+label {
+  font-size: 13px;
+  font-weight: 800;
+  color: #374151;
+}
+input,
+select {
+  height: 46px;
+  border: 1px solid #dbe3ef;
+  border-radius: 10px;
+  padding: 0 14px;
+  font-size: 14px;
+  outline: none;
+  background: #fff;
+}
+input:focus,
+select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+.form-grid div {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 18px;
+}
+.btn-cancel,
+button {
+  height: 42px;
+  padding: 0 22px;
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+.btn-cancel {
+  border: 1px solid #dbe3ef;
+  color: #374151;
+  background: #fff;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+}
+button {
+  border: none;
+  background: #2563eb;
+  color: #fff;
+}
+button:hover {
+  background: #1d4ed8;
+}
+.check {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.check input {
+  height: auto;
+}
+.color-options,
+.days {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.color-options label,
+.days label {
+  cursor: pointer;
+}
+.color-options input,
+.days input {
+  display: none;
+}
+.color-options span {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: block;
+  border: 3px solid transparent;
+}
+.color-options input:checked + span {
+  border-color: #111827;
+}
+.days span {
+  display: inline-flex;
+  height: 34px;
+  min-width: 48px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: #eef2f7;
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 800;
+}
+.days input:checked + span {
+  background: #2563eb;
+  color: #fff;
+}
+@media (max-width: 700px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Professores</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+    <link rel="stylesheet" href="/css/form.css" />
+  </head>
+  <body>
+    <div class="container">
+      <%- include('../partials/sidebar') %>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Professores</h1>
+            <p>Gerencie os professores cadastrados.</p>
+          </div>
+        </header>
+        <%- include('../partials/messages') %>
+        <div class="grid">
+          <div class="panel">
+            <h3>Novo Professor</h3>
+            <form action="/admin/professores" method="POST">
+              <label>Nome</label>
+              <input type="text" name="nome" required minlength="3" />
+              <label>E-mail</label>
+              <input type="email" name="email" />
+              <label>Área</label>
+              <input type="text" name="area" placeholder="Ex.: Sistemas Digitais" />
+              <label>Disciplinas</label>
+              <input type="text" name="disciplinas" placeholder="Ex.: Circuitos, Arquitetura" />
+              <label>Carga semanal</label>
+              <input type="number" name="cargaSemanal" min="0" value="0" />
+              <div class="form-actions"><button type="submit">Cadastrar Professor</button></div>
+            </form>
+          </div>
+          <div class="panel">
+            <h3>Lista de Professores</h3>
+            <div class="table-wrapper">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Status</th>
+                    <th>Carga</th>
+                    <th>Ações</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if (professores.length === 0) { %>
+                  <tr><td colspan="5">Nenhum professor cadastrado.</td></tr>
+                  <% } %><% professores.forEach(professor => { %>
+                  <tr>
+                    <td><%= professor.id %></td>
+                    <td>
+                      <strong><%= professor.nome %></strong>
+                      <br />
+                      <small><%= professor.email || '' %></small>
+                    </td>
+                    <td>
+                      <span class="badge <%= professor.ativo ? 'active' : 'inactive' %>">
+                        <%= professor.ativo ? 'Ativo' : 'Inativo' %>
+                      </span>
+                    </td>
+                    <td><%= professor.cargaSemanal || 0 %>h</td>
+                    <td class="actions">
+                      <a class="btn-edit" href="/admin/professores/<%= professor.id %>/editar">
+                        Editar
+                      </a>
+                      <form
+                        action="/admin/professores/<%= professor.id %>/excluir"
+                        method="POST"
+                        onsubmit="return confirm('Excluir professor?');"
+                      >
+                        <button class="btn-delete" type="submit">Excluir</button>
+                      </form>
+                    </td>
+                  </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
