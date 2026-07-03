@@ -1,38 +1,564 @@
 \c horarios_db;
+TRUNCATE TABLE "Matriculas", "Horarios", "Turmas", "Disciplinas", "Professors", "Alunos", "Admins" RESTART IDENTITY CASCADE;
 
-TRUNCATE TABLE "Matriculas", "Horarios", "Turmas", "Disciplinas", "Professors", "Alunos" RESTART IDENTITY CASCADE;
-
+INSERT INTO "Admins" (nome, email, senha, ativo, "createdAt", "updatedAt") VALUES
+('Administrador','admin@admin.com','admin123',true,NOW(),NOW());
 INSERT INTO "Alunos" (nome, matricula, email, curso, semestre, ativo, "createdAt", "updatedAt") VALUES
-('Ana Clara Santos','20261001','ana.santos@uefs.br','Engenharia de Computação','1º Semestre',true,NOW(),NOW()),
-('Bruno Oliveira','20261002','bruno.oliveira@uefs.br','Engenharia de Computação','3º Semestre',true,NOW(),NOW()),
-('Carla Souza','20261003','carla.souza@uefs.br','Engenharia de Computação','5º Semestre',true,NOW(),NOW()),
-('Diego Lima','20261004','diego.lima@uefs.br','Engenharia de Computação','7º Semestre',true,NOW(),NOW());
+('Ana Clara Santos','20261001','ana.santos@uefs.br','Engenharia de Computação','2026.2',true,NOW(),NOW()),
+('Bruno Oliveira','20261002','bruno.oliveira@uefs.br','Engenharia de Computação','2026.2',true,NOW(),NOW()),
+('Carla Souza','20261003','carla.souza@uefs.br','Engenharia de Computação','2026.2',true,NOW(),NOW()),
+('Diego Lima','20261004','diego.lima@uefs.br','Engenharia de Computação','2026.2',true,NOW(),NOW());
 
 INSERT INTO "Professors" (nome, email, area, ativo, disciplinas, "cargaSemanal", "createdAt", "updatedAt") VALUES
-('Fernando Paixão','fernando.paixao@uefs.br','Física e Sistemas Digitais',true,'Física I, Circuitos Digitais',0,NOW(),NOW()),
-('Gabriela Chaves','gabriela.chaves@uefs.br','Matemática',true,'Cálculo I, Álgebra Linear',0,NOW(),NOW()),
-('Ramon Menezes','ramon.menezes@uefs.br','Computação',true,'Algoritmos, Estrutura de Dados',0,NOW(),NOW()),
-('Juliana Ramos','juliana.ramos@uefs.br','Engenharia de Software',true,'Banco de Dados, Engenharia de Software',0,NOW(),NOW());
+('A definir','a.definir@uefs.br','Ensino Superior',true,'DIREITO TRABALHISTA E PREVIDENCIÁRIO, EDUCAÇÃO ESPECIAL E POLÍTICAS EDUCACIONAIS INCLUSIVAS, MÉTODOS COMPUTACIONAIS, SEGURANÇA DE COMPUTADORES E CRIPTOGRAFIA',0,NOW(),NOW()),
+('ADEMAKSON SOUZA ARAÚJO','ademakson.souza.ara.jo@uefs.br','Ensino Superior',true,'ÁLGEBRA LINEAR I E',0,NOW(),NOW()),
+('ADRIELLY FERREIRA MORAIS','adrielly.ferreira.morais@uefs.br','Ensino Superior',true,'PRINCÍPIOS DE ADMINISTRAÇÃO',0,NOW(),NOW()),
+('ANA BARREIROS DE CARVALHO','ana.barreiros.de.carvalho@uefs.br','Ensino Superior',true,'INTRODUÇÃO À ADMINISTRAÇÃO',0,NOW(),NOW()),
+('ANA CLAUDIA FIORIN PIANESSO','ana.claudia.fiorin.pianesso@uefs.br','Ensino Superior',true,'METODOLOGIA DA PESQUISA E DESENVOLVIMENTO EM ENGENHARIA DE COMPUTAÇÃO, PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS, SISTEMAS OPERACIONAIS',0,NOW(),NOW()),
+('ANA LUCIA CARVALHO SANTOS LEANDRO BATISTA DUARTE','ana.lucia.carvalho.santos.leandro.batista.duarte@uefs.br','Ensino Superior',true,'MERCADO DE CAPITAIS - A',0,NOW(),NOW()),
+('ANA LUCIA LIMA MARREIROS MAIA','ana.lucia.lima.marreiros.maia@uefs.br','Ensino Superior',true,'ESTRUTURAS DE DADOS',0,NOW(),NOW()),
+('ANDRESSA DE SOUSA SANTOS FERREIRA','andressa.de.sousa.santos.ferreira@uefs.br','Ensino Superior',true,'INTRODUÇÃO À ADMINISTRAÇÃO',0,NOW(),NOW()),
+('ANGELO AMÂNCIO DUARTE','angelo.am.ncio.duarte@uefs.br','Ensino Superior',true,'ARQUITETURA DE COMPUTADORES, COMPUTAÇÃO DE ALTO DESEMPENHO, MI - SISTEMAS DIGITAIS',0,NOW(),NOW()),
+('ANGELO CONRADO LOULA','angelo.conrado.loula@uefs.br','Ensino Superior',true,'EMPREENDEDORISMO I',0,NOW(),NOW()),
+('ANTÔNIO AUGUSTO TEIXEIRA RIBEIRO COUTINHO','ant.nio.augusto.teixeira.ribeiro.coutinho@uefs.br','Ensino Superior',true,'MI - CONCORRÊNCIA E CONECTIVIDADE, REDES DE COMPUTADORES',0,NOW(),NOW()),
+('ARMANDO SANCA SANCA','armando.sanca.sanca@uefs.br','Ensino Superior',true,'ELETRÔNICA PARA PROCESSAMENTO DIGITAL DE SINAIS, MI - PROCESSAMENTO DIGITAL DE SINAIS, SISTEMAS ROBÓTICOS AUTÔNOMOS',0,NOW(),NOW()),
+('BIANCA LEITE SANTANA','bianca.leite.santana@uefs.br','Ensino Superior',true,'ALGORITMOS E PROGRAMAÇÃO II, MI - ALGORITMOS, MI - PROGRAMAÇÃO, MI ENGENHARIA DE SOFTWARE',0,NOW(),NOW()),
+('CARLOS ALBERTO RODRIGUES','carlos.alberto.rodrigues@uefs.br','Ensino Superior',true,'FINANÇAS COMPUTACIONAIS, MI - PROGRAMAÇÃO',0,NOW(),NOW()),
+('CARLOS EDUARDO MAGALHÃES BATISTA','carlos.eduardo.magalh.es.batista@uefs.br','Ensino Superior',true,'FÍSICA EXPERIMENTAL I, FÍSICA EXPERIMENTAL III',0,NOW(),NOW()),
+('CLAUDIA PINTO PEREIRA SENA','claudia.pinto.pereira.sena@uefs.br','Ensino Superior',true,'ALGORITMOS E PROGRAMAÇÃO I, INFORMÁTICA NA EDUCAÇÃO',0,NOW(),NOW()),
+('CLAUDIA PINTO PEREIRA SENA TIAGO AMADOR COELHO','claudia.pinto.pereira.sena.tiago.amador.coelho@uefs.br','Ensino Superior',true,'MI - ALGORITMOS',0,NOW(),NOW()),
+('CLODOALDO ALMEIDA DA PAIXÃO','clodoaldo.almeida.da.paix.o@uefs.br','Ensino Superior',true,'CIÊNCIA POLÍTICA',0,NOW(),NOW()),
+('CRISTIANO HENRIQUE DE OLIVEIRA MASCARENHAS','cristiano.henrique.de.oliveira.mascarenhas@uefs.br','Ensino Superior',true,'CÁLCULO DIFERENCIAL E INTEGRAL II E',0,NOW(),NOW()),
+('CÉLIA OLIVEIRA DE JESUS SACRAMENTO','c.lia.oliveira.de.jesus.sacramento@uefs.br','Ensino Superior',true,'PLANEJAMENTO E ORÇAMENTO PÚBLICO',0,NOW(),NOW()),
+('DANIELA BETÂNIA DOS SANTOS FERREIRA','daniela.bet.nia.dos.santos.ferreira@uefs.br','Ensino Superior',true,'LIBRAS: NOÇÕES BÁSICAS',0,NOW(),NOW()),
+('DARLAN FERREIRA DE OLIVEIRA','darlan.ferreira.de.oliveira@uefs.br','Ensino Superior',true,'EQUAÇÕES DIFERENCIAIS I-E',0,NOW(),NOW()),
+('DAVID MOISES BARRETO DOS SANTOS','david.moises.barreto.dos.santos@uefs.br','Ensino Superior',true,'MI - PROGRAMAÇÃO, TÓPICOS DE FORMAÇÃO HUMANÍSTICA',0,NOW(),NOW()),
+('DELMAR BROGLIO CARVALHO','delmar.broglio.carvalho@uefs.br','Ensino Superior',true,'CIRCUITOS ELÉTRICOS, INTRODUÇÃO A ELETRÔNICA, MI - PROJETOS DE CIRCUITOS ELETRÔNICOS',0,NOW(),NOW()),
+('DILSON CERQUEIRA DA SILVA','dilson.cerqueira.da.silva@uefs.br','Ensino Superior',true,'PRINCÍPIO DE CONTAB. GERAL',0,NOW(),NOW()),
+('EDGAR SILVA JUNIOR','edgar.silva.junior@uefs.br','Ensino Superior',true,'FORMAÇÃO E VISUALIZAÇÃO DE IMAGENS DIGITAIS, MI - PROCESSAMENTO DIGITAL DE SINAIS, PROCESSAMENTO DIGITAL DE SINAIS',0,NOW(),NOW()),
+('EDUARDO BRESCANSIN DE AMORES','eduardo.brescansin.de.amores@uefs.br','Ensino Superior',true,'FÍSICA EXPERIMENTAL I',0,NOW(),NOW()),
+('EDUARDO OLIVEIRA MIRANDA','eduardo.oliveira.miranda@uefs.br','Ensino Superior',true,'RELAÇÕES ÉTNICO-RACIAIS NA ESCOLA',0,NOW(),NOW()),
+('ELINALDO SANTOS DE GÓES JÚNIOR','elinaldo.santos.de.g.es.j.nior@uefs.br','Ensino Superior',true,'MI - CONCORRÊNCIA E CONECTIVIDADE, SISTEMAS OPERACIONAIS',0,NOW(),NOW()),
+('ELIO PITHON SARNO FILHO','elio.pithon.sarno.filho@uefs.br','Ensino Superior',true,'CIRCUITOS ELÉTRICOS, INTRODUÇÃO A ELETRÔNICA, PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS, SINAIS E SISTEMAS',0,NOW(),NOW()),
+('ELISÂNGELA OLIVEIRA CARNEIRO','elis.ngela.oliveira.carneiro@uefs.br','Ensino Superior',true,'MI - CONCORRÊNCIA E CONECTIVIDADE, SISTEMAS DISTRIBUÍDOS AVANÇADOS',0,NOW(),NOW()),
+('ERNANDO SILVA FERREIRA','ernando.silva.ferreira@uefs.br','Ensino Superior',true,'FÍSICA EXPERIMENTAL III, FÍSICA III',0,NOW(),NOW()),
+('FELIPE MASCARENHAS COUTO','felipe.mascarenhas.couto@uefs.br','Ensino Superior',true,'PROJETOS ECONÔMICOS E FINANCEIROS',0,NOW(),NOW()),
+('FERNANDA OLIVEIRA CAIRES E CAIRES','fernanda.oliveira.caires.e.caires@uefs.br','Ensino Superior',true,'INTRODUÇÃO À MICROECONOMIA',0,NOW(),NOW()),
+('FERNANDO FLORES SANTOS RIBEIRO','fernando.flores.santos.ribeiro@uefs.br','Ensino Superior',true,'COMPUTAÇÃO VISUAL, MI - PROJETO DE CIRCUITOS DIGITAIS',0,NOW(),NOW()),
+('FREDSON BRAZ MATOS DOS SANTOS','fredson.braz.matos.dos.santos@uefs.br','Ensino Superior',true,'FÍSICA I',0,NOW(),NOW()),
+('GABRIELA RIBEIRO PEIXOTO REZENDE PINTO','gabriela.ribeiro.peixoto.rezende.pinto@uefs.br','Ensino Superior',true,'INTELIGÊNCIA ARTIFICIAL GENERATIVA NA EDUCAÇÃO',0,NOW(),NOW()),
+('GABRIELA RIBEIRO PEIXOTO Teórica-Prática REZENDE PINTO','gabriela.ribeiro.peixoto.te.rica.pr.tica.rezende.pinto@uefs.br','Ensino Superior',true,'ÉTICA EM COMPUTAÇÃO',0,NOW(),NOW()),
+('HUMBERTO TALMA DA CUNHA','humberto.talma.da.cunha@uefs.br','Ensino Superior',true,'QUÍMICA GERAL E DE MATERIAIS',0,NOW(),NOW()),
+('ISADORA TAIRINNE DE SENA BASTOS','isadora.tairinne.de.sena.bastos@uefs.br','Ensino Superior',true,'FÍSICA EXPERIMENTAL I',0,NOW(),NOW()),
+('JANY SANTOS SOUZA GOULART','jany.santos.souza.goulart@uefs.br','Ensino Superior',true,'INTRODUÇÃO AO CÁLCULO',0,NOW(),NOW()),
+('JOSÉ AMÂNCIO MACEDO SANTOS','jos.am.ncio.macedo.santos@uefs.br','Ensino Superior',true,'ARQUITETURA E DESIGN DE SOFTWARE',0,NOW(),NOW()),
+('JOÃO BATISTA DA ROCHA JUNIOR TIAGO AMADOR COELHO','jo.o.batista.da.rocha.junior.tiago.amador.coelho@uefs.br','Ensino Superior',true,'EXTENSÃO EM COMPUTAÇÃO I',0,NOW(),NOW()),
+('JOÃO BOSCO GERTRUDES MARCOS DE ARAÚJO PAZ','jo.o.bosco.gertrudes.marcos.de.ara.jo.paz@uefs.br','Ensino Superior',true,'CIRCUITOS ELÉTRICOS, MI - PROJETOS DE CIRCUITOS ELETRÔNICOS',0,NOW(),NOW()),
+('JOÃO BOSCO GERTRUDES Orientada MARCOS DE ARAÚJO PAZ','jo.o.bosco.gertrudes.orientada.marcos.de.ara.jo.paz@uefs.br','Ensino Superior',true,'TRABALHO DE CONCLUSÃO DE CURSO I',0,NOW(),NOW()),
+('JOÃO EVANGELISTA DOS SANTOS FILHO','jo.o.evangelista.dos.santos.filho@uefs.br','Ensino Superior',true,'CONTABILIDADE GERAL I',0,NOW(),NOW()),
+('JUCINEIDE SILVA SANTOS','jucineide.silva.santos@uefs.br','Ensino Superior',true,'ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA',0,NOW(),NOW()),
+('JULIO CELSO RIBEIRO DE VASCONCELOS','julio.celso.ribeiro.de.vasconcelos@uefs.br','Ensino Superior',true,'HISTÓRIA E FILOSOFIA DA CIÊNCIA',0,NOW(),NOW()),
+('JULIO CÉSAR ANDRADE SILVA','julio.c.sar.andrade.silva@uefs.br','Ensino Superior',true,'MI - ALGORITMOS, MI ENGENHARIA DE SOFTWARE',0,NOW(),NOW()),
+('LARISSA ROCHA SOARES BASTOS','larissa.rocha.soares.bastos@uefs.br','Ensino Superior',true,'ENGENHARIA DE SOFTWARE, ESTÁGIO, MI ENGENHARIA DE SOFTWARE',0,NOW(),NOW()),
+('LUIZ CARLOS RIBEIRO SANTOS','luiz.carlos.ribeiro.santos@uefs.br','Ensino Superior',true,'INTRODUÇÃO À MACROECONOMIA',0,NOW(),NOW()),
+('MARCOS DE ARAÚJO PAZ','marcos.de.ara.jo.paz@uefs.br','Ensino Superior',true,'MÉTODOS COMPUTACIONAIS',0,NOW(),NOW()),
+('MATHEUS GIOVANNI PIRES','matheus.giovanni.pires@uefs.br','Ensino Superior',true,'LINGUAGENS FORMAIS E COMPILADORES, MI - PROGRAMAÇÃO',0,NOW(),NOW()),
+('MICHELE FÚLVIA ANGELO','michele.f.lvia.angelo@uefs.br','Ensino Superior',true,'ALGORITMOS E PROGRAMAÇÃO I, INTRODUÇÃO À ENGENHARIA DE COMPUTAÇÃO, MI - ALGORITMOS',0,NOW(),NOW()),
+('MOACYR RODRIGUES DE MIRANDA JÚNIOR','moacyr.rodrigues.de.miranda.j.nior@uefs.br','Ensino Superior',true,'ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA',0,NOW(),NOW()),
+('MÁRCIA LISSANDRA MACHADO Orientada PRADO Legenda Disponíveis: Indica a quantidade de vagas disponíveis para o curso Ofertadas: Indica a quantidade de vagas disponíves na classe para pós alocação Ofertadas: Indica a quantidade de vagas que foi inicialmente planejada Ocupadas: Indica a quantidade de vagas da classe ocupadas em pós alocação Ocupadas: Total de vagas utilizadas Ocupadas Curso: Indica a quantidade de vagas ocupadas pelo curso em pós alocação Abertas: Quantidade de vagas adicionais posterior ao planejamento inicial Indica que Disciplina Cedidas: Total de vagas doadas para outro(s) Curso(s) ¹ Indica que Disciplina não faz parte da Matriz Curricular Recebidas: Total de vagas que foram transferidas de outros cursos. ² Indica que Disciplina é EAD ³ Indica que Disciplina é antecipada','m.rcia.lissandra.machado.orientada.prado.legenda.dispon.veis.indica.a.quantidade.de.vagas.dispon.veis.para.o.curso.ofertadas.indica.a.quantidade.de.vagas.dispon.ves.na.classe.para.p.s.aloca.o.ofertadas.indica.a.quantidade.de.vagas.que.foi.inicialmente.planejada.ocupadas.indica.a.quantidade.de.vagas.da.classe.ocupadas.em.p.s.aloca.o.ocupadas.total.de.vagas.utilizadas.ocupadas.curso.indica.a.quantidade.de.vagas.ocupadas.pelo.curso.em.p.s.aloca.o.abertas.quantidade.de.vagas.adicionais.posterior.ao.planejamento.inicial.indica.que.disciplina.cedidas.total.de.vagas.doadas.para.outro.s.curso.s.indica.que.disciplina.n.o.faz.parte.da.matriz.curricular.recebidas.total.de.vagas.que.foram.transferidas.de.outros.cursos.indica.que.disciplina.ead.indica.que.disciplina.antecipada@uefs.br','Ensino Superior',true,'TRABALHO DE CONCLUSÃO DE CURSO II',0,NOW(),NOW()),
+('MÁRCIA LISSANDRA MACHADO PRADO','m.rcia.lissandra.machado.prado@uefs.br','Ensino Superior',true,'CIRCUITOS ELÉTRICOS, ELETRÔNICA GERAL, INTRODUÇÃO A SISTEMAS DE CONTROLE, MI - PROJETOS DE CIRCUITOS ELETRÔNICOS, TRABALHO DE CONCLUSÃO DE CURSO II',0,NOW(),NOW()),
+('ODEJANE LIMA FRANCO','odejane.lima.franco@uefs.br','Ensino Superior',true,'FUNDAMENTOS DIREITO PUBLICO E PRIVADO',0,NOW(),NOW()),
+('PÂMELA MICHELE CÂNDIDA CORTEZ','p.mela.michele.c.ndida.cortez@uefs.br','Ensino Superior',true,'ESTRUTURAS DE DADOS, TEORIA DA COMPUTAÇÃO',0,NOW(),NOW()),
+('REINALDA SOUZA OLIVEIRA','reinalda.souza.oliveira@uefs.br','Ensino Superior',true,'PROBABILIDADE E ESTATÍSTICA I E',0,NOW(),NOW()),
+('ROBERTO ALMEIDA BITTENCOURT','roberto.almeida.bittencourt@uefs.br','Ensino Superior',true,'ALGORITMOS E PROGRAMAÇÃO II, MI - PROGRAMAÇÃO',0,NOW(),NOW()),
+('RODRIGO TRIPODI CALUMBY','rodrigo.tripodi.calumby@uefs.br','Ensino Superior',true,'BANCOS DE DADOS',0,NOW(),NOW()),
+('ROGÉRIO GOMES MATIAS','rog.rio.gomes.matias@uefs.br','Ensino Superior',true,'CÁLCULO DIFERENCIAL E INTEGRAL I E',0,NOW(),NOW()),
+('ROSARIA DA PAIXÃO TRINDADE','rosaria.da.paix.o.trindade@uefs.br','Ensino Superior',true,'EXTENSÃO EM COMPUTAÇÃO II, TÓPICOS DE FORMAÇÃO COMPLEMENTAR',0,NOW(),NOW()),
+('TALITA ROCHA PINHEIRO','talita.rocha.pinheiro@uefs.br','Ensino Superior',true,'MI - CONCORRÊNCIA E CONECTIVIDADE, REDES DE COMPUTADORES',0,NOW(),NOW()),
+('THIAGO ANTONIO MELO EUZÉBIO','thiago.antonio.melo.euz.bio@uefs.br','Ensino Superior',true,'MI - ALGORITMOS',0,NOW(),NOW()),
+('THIAGO CERQUEIRA DE JESUS','thiago.cerqueira.de.jesus@uefs.br','Ensino Superior',true,'CIRCUITOS DIGITAIS, MI - SISTEMAS DIGITAIS',0,NOW(),NOW()),
+('THIAGO D''MARTIN MAIA','thiago.d.martin.maia@uefs.br','Ensino Superior',true,'ANÁLISE E PROJETO DE ALGORITMOS, LÓGICA PARA COMPUTAÇÃO',0,NOW(),NOW()),
+('THIAGO PIRES SANTANA','thiago.pires.santana@uefs.br','Ensino Superior',true,'ESTRUTURAS DISCRETAS',0,NOW(),NOW()),
+('VICTOR BORGES CARNEIRO','victor.borges.carneiro@uefs.br','Ensino Superior',true,'CÁLCULO DIFERENCIAL E INTEGRAL II E',0,NOW(),NOW()),
+('VICTOR TRAVASSOS SARINHO','victor.travassos.sarinho@uefs.br','Ensino Superior',true,'ENGENHARIA DE SOFTWARE, JOGOS DIGITAIS, MI ENGENHARIA DE SOFTWARE',0,NOW(),NOW()),
+('VIVIANE SOUZA MARTINS','viviane.souza.martins@uefs.br','Ensino Superior',true,'EDUCAÇÃO AMBIENTAL',0,NOW(),NOW()),
+('WILD FREITAS DA SILVA SANTOS','wild.freitas.da.silva.santos@uefs.br','Ensino Superior',true,'MI - PROJETO DE CIRCUITOS DIGITAIS, MI - SISTEMAS DIGITAIS',0,NOW(),NOW()),
+('ZANNA MARIA RODRIGUES DE MATOS','zanna.maria.rodrigues.de.matos@uefs.br','Ensino Superior',true,'CIÊNCIAS DO AMBIENTE - E',0,NOW(),NOW());
 
-INSERT INTO "Disciplinas" (nome, codigo, semestre, "cargaHoraria", coordenador, prerequisito, "createdAt", "updatedAt") VALUES
-('Algoritmos','TEC101','1º Semestre',60,'Ramon Menezes','',NOW(),NOW()),
-('Cálculo I','MAT101','1º Semestre',60,'Gabriela Chaves','',NOW(),NOW()),
-('Estrutura de Dados','TEC202','3º Semestre',60,'Ramon Menezes','Algoritmos',NOW(),NOW()),
-('Banco de Dados','TEC404','5º Semestre',60,'Juliana Ramos','Estrutura de Dados',NOW(),NOW()),
-('Circuitos Digitais','TEC301','3º Semestre',60,'Fernando Paixão','Física I',NOW(),NOW());
+INSERT INTO "Disciplinas" (nome, codigo, semestre, "cargaHoraria", coordenador, "createdAt", "updatedAt") VALUES
+('EDUCAÇÃO AMBIENTAL','BIO606','2026.2',30,'VIVIANE SOUZA MARTINS',NOW(),NOW()),
+('CIÊNCIA POLÍTICA','CHF400','2026.2',60,'CLODOALDO ALMEIDA DA PAIXÃO',NOW(),NOW()),
+('HISTÓRIA E FILOSOFIA DA CIÊNCIA','CHF510','2026.2',30,'JULIO CELSO RIBEIRO DE VASCONCELOS',NOW(),NOW()),
+('FUNDAMENTOS DIREITO PUBLICO E PRIVADO','CIS107','2026.2',60,'ODEJANE LIMA FRANCO',NOW(),NOW()),
+('PLANEJAMENTO E ORÇAMENTO PÚBLICO','CIS186','2026.2',60,'CÉLIA OLIVEIRA DE JESUS SACRAMENTO',NOW(),NOW()),
+('PROJETOS ECONÔMICOS E FINANCEIROS','CIS199','2026.2',30,'FELIPE MASCARENHAS COUTO',NOW(),NOW()),
+('MERCADO DE CAPITAIS - A','CIS248','2026.2',30,'ANA LUCIA CARVALHO SANTOS LEANDRO BATISTA DUARTE',NOW(),NOW()),
+('INTRODUÇÃO À ADMINISTRAÇÃO','CIS301','2026.2',60,'ANDRESSA DE SOUSA SANTOS FERREIRA',NOW(),NOW()),
+('CONTABILIDADE GERAL I','CIS381','2026.2',60,'JOÃO EVANGELISTA DOS SANTOS FILHO',NOW(),NOW()),
+('INTRODUÇÃO À MACROECONOMIA','CIS382','2026.2',60,'LUIZ CARLOS RIBEIRO SANTOS',NOW(),NOW()),
+('INTRODUÇÃO À MICROECONOMIA','CIS385','2026.2',60,'FERNANDA OLIVEIRA CAIRES E CAIRES',NOW(),NOW()),
+('DIREITO TRABALHISTA E PREVIDENCIÁRIO','CIS392','2026.2',60,'A definir',NOW(),NOW()),
+('PRINCÍPIO DE CONTAB. GERAL','CIS425','2026.2',60,'DILSON CERQUEIRA DA SILVA',NOW(),NOW()),
+('PRINCÍPIOS DE ADMINISTRAÇÃO','CIS457','2026.2',60,'ADRIELLY FERREIRA MORAIS',NOW(),NOW()),
+('EDUCAÇÃO ESPECIAL E POLÍTICAS EDUCACIONAIS INCLUSIVAS','EDU113','2026.2',30,'A definir',NOW(),NOW()),
+('RELAÇÕES ÉTNICO-RACIAIS NA ESCOLA','EDU311','2026.2',60,'EDUARDO OLIVEIRA MIRANDA',NOW(),NOW()),
+('INTELIGÊNCIA ARTIFICIAL GENERATIVA NA EDUCAÇÃO','EXA085','2026.2',60,'GABRIELA RIBEIRO PEIXOTO REZENDE PINTO',NOW(),NOW()),
+('QUÍMICA GERAL E DE MATERIAIS','EXA417','2026.2',60,'HUMBERTO TALMA DA CUNHA',NOW(),NOW()),
+('INTRODUÇÃO AO CÁLCULO','EXA543','2026.2',60,'JANY SANTOS SOUZA GOULART',NOW(),NOW()),
+('LINGUAGENS FORMAIS E COMPILADORES','EXA544','2026.2',60,'MATHEUS GIOVANNI PIRES',NOW(),NOW()),
+('TEORIA DA COMPUTAÇÃO','EXA545','2026.2',60,'PÂMELA MICHELE CÂNDIDA CORTEZ',NOW(),NOW()),
+('ESTÁGIO','EXA612','2026.2',30,'LARISSA ROCHA SOARES BASTOS',NOW(),NOW()),
+('MI ENGENHARIA DE SOFTWARE','EXA613','2026.2',60,'LARISSA ROCHA SOARES BASTOS',NOW(),NOW()),
+('TÓPICOS DE FORMAÇÃO HUMANÍSTICA','EXA614','2026.2',60,'DAVID MOISES BARRETO DOS SANTOS',NOW(),NOW()),
+('ÉTICA EM COMPUTAÇÃO','EXA615','2026.2',60,'GABRIELA RIBEIRO PEIXOTO Teórica-Prática REZENDE PINTO',NOW(),NOW()),
+('EMPREENDEDORISMO I','EXA616','2026.2',60,'ANGELO CONRADO LOULA',NOW(),NOW()),
+('INFORMÁTICA NA EDUCAÇÃO','EXA619','2026.2',60,'CLAUDIA PINTO PEREIRA SENA',NOW(),NOW()),
+('JOGOS DIGITAIS','EXA620','2026.2',60,'VICTOR TRAVASSOS SARINHO',NOW(),NOW()),
+('EXTENSÃO EM COMPUTAÇÃO I','EXA622','2026.2',60,'JOÃO BATISTA DA ROCHA JUNIOR TIAGO AMADOR COELHO',NOW(),NOW()),
+('FINANÇAS COMPUTACIONAIS','EXA623','2026.2',60,'CARLOS ALBERTO RODRIGUES',NOW(),NOW()),
+('ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','EXA702','2026.2',60,'MOACYR RODRIGUES DE MIRANDA JÚNIOR',NOW(),NOW()),
+('ÁLGEBRA LINEAR I E','EXA703','2026.2',60,'ADEMAKSON SOUZA ARAÚJO',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL I E','EXA704','2026.2',60,'ROGÉRIO GOMES MATIAS',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL II E','EXA705','2026.2',60,'CRISTIANO HENRIQUE DE OLIVEIRA MASCARENHAS',NOW(),NOW()),
+('EQUAÇÕES DIFERENCIAIS I-E','EXA706','2026.2',60,'DARLAN FERREIRA DE OLIVEIRA',NOW(),NOW()),
+('PROBABILIDADE E ESTATÍSTICA I E','EXA709','2026.2',60,'REINALDA SOUZA OLIVEIRA',NOW(),NOW()),
+('ALGORITMOS E PROGRAMAÇÃO I','EXA801','2026.2',60,'CLAUDIA PINTO PEREIRA SENA',NOW(),NOW()),
+('LÓGICA PARA COMPUTAÇÃO','EXA802','2026.2',60,'THIAGO D''MARTIN MAIA',NOW(),NOW()),
+('ALGORITMOS E PROGRAMAÇÃO II','EXA805','2026.2',60,'ROBERTO ALMEIDA BITTENCOURT',NOW(),NOW()),
+('ESTRUTURAS DE DADOS','EXA806','2026.2',60,'PÂMELA MICHELE CÂNDIDA CORTEZ',NOW(),NOW()),
+('ESTRUTURAS DISCRETAS','EXA807','2026.2',60,'THIAGO PIRES SANTANA',NOW(),NOW()),
+('ENGENHARIA DE SOFTWARE','EXA809','2026.2',60,'LARISSA ROCHA SOARES BASTOS',NOW(),NOW()),
+('BANCOS DE DADOS','EXA810','2026.2',30,'RODRIGO TRIPODI CALUMBY',NOW(),NOW()),
+('ANÁLISE E PROJETO DE ALGORITMOS','EXA813','2026.2',60,'THIAGO D''MARTIN MAIA',NOW(),NOW()),
+('ESTÁGIO','EXA828','2026.2',30,'LARISSA ROCHA SOARES BASTOS',NOW(),NOW()),
+('MI - ALGORITMOS','EXA854','2026.2',60,'CLAUDIA PINTO PEREIRA SENA TIAGO AMADOR COELHO',NOW(),NOW()),
+('INTRODUÇÃO À ENGENHARIA DE COMPUTAÇÃO','EXA861','2026.2',30,'MICHELE FÚLVIA ANGELO',NOW(),NOW()),
+('MI - PROGRAMAÇÃO','EXA863','2026.2',60,'DAVID MOISES BARRETO DOS SANTOS',NOW(),NOW()),
+('ARQUITETURA E DESIGN DE SOFTWARE','EXA871','2026.2',60,'JOSÉ AMÂNCIO MACEDO SANTOS',NOW(),NOW()),
+('FÍSICA I','FIS155','2026.2',60,'FREDSON BRAZ MATOS DOS SANTOS',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL I','FIS156','2026.2',60,'CARLOS EDUARDO MAGALHÃES BATISTA',NOW(),NOW()),
+('FÍSICA III','FIS160','2026.2',60,'ERNANDO SILVA FERREIRA',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL III','FIS161','2026.2',60,'CARLOS EDUARDO MAGALHÃES BATISTA',NOW(),NOW()),
+('LIBRAS: NOÇÕES BÁSICAS','LET808','2026.2',30,'DANIELA BETÂNIA DOS SANTOS FERREIRA',NOW(),NOW()),
+('CIÊNCIAS DO AMBIENTE - E','TEC167','2026.2',30,'ZANNA MARIA RODRIGUES DE MATOS',NOW(),NOW()),
+('MÉTODOS COMPUTACIONAIS','TEC217','2026.2',60,'MARCOS DE ARAÚJO PAZ',NOW(),NOW()),
+('CIRCUITOS ELÉTRICOS','TEC218','2026.2',60,'JOÃO BOSCO GERTRUDES MARCOS DE ARAÚJO PAZ',NOW(),NOW()),
+('ELETRÔNICA GERAL','TEC219','2026.2',30,'MÁRCIA LISSANDRA MACHADO PRADO',NOW(),NOW()),
+('SISTEMAS ROBÓTICOS AUTÔNOMOS','TEC220','2026.2',60,'ARMANDO SANCA SANCA',NOW(),NOW()),
+('TÓPICOS DE FORMAÇÃO COMPLEMENTAR','TEC221','2026.2',60,'ROSARIA DA PAIXÃO TRINDADE',NOW(),NOW()),
+('TRABALHO DE CONCLUSÃO DE CURSO II','TEC222','2026.2',30,'MÁRCIA LISSANDRA MACHADO PRADO',NOW(),NOW()),
+('EXTENSÃO EM COMPUTAÇÃO II','TEC224','2026.2',60,'ROSARIA DA PAIXÃO TRINDADE',NOW(),NOW()),
+('CIRCUITOS DIGITAIS','TEC401','2026.2',30,'THIAGO CERQUEIRA DE JESUS',NOW(),NOW()),
+('ARQUITETURA DE COMPUTADORES','TEC402','2026.2',60,'ANGELO AMÂNCIO DUARTE',NOW(),NOW()),
+('SISTEMAS OPERACIONAIS','TEC408','2026.2',60,'ELINALDO SANTOS DE GÓES JÚNIOR',NOW(),NOW()),
+('REDES DE COMPUTADORES','TEC409','2026.2',60,'ANTÔNIO AUGUSTO TEIXEIRA RIBEIRO COUTINHO',NOW(),NOW()),
+('SINAIS E SISTEMAS','TEC412','2026.2',60,'ELIO PITHON SARNO FILHO',NOW(),NOW()),
+('PROCESSAMENTO DIGITAL DE SINAIS','TEC430','2026.2',30,'EDGAR SILVA JUNIOR',NOW(),NOW()),
+('FORMAÇÃO E VISUALIZAÇÃO DE IMAGENS DIGITAIS','TEC433','2026.2',60,'EDGAR SILVA JUNIOR',NOW(),NOW()),
+('COMPUTAÇÃO VISUAL','TEC434','2026.2',60,'FERNANDO FLORES SANTOS RIBEIRO',NOW(),NOW()),
+('SEGURANÇA DE COMPUTADORES E CRIPTOGRAFIA','TEC451','2026.2',60,'A definir',NOW(),NOW()),
+('INTRODUÇÃO A SISTEMAS DE CONTROLE','TEC467','2026.2',60,'MÁRCIA LISSANDRA MACHADO PRADO',NOW(),NOW()),
+('INTRODUÇÃO A ELETRÔNICA','TEC497','2026.2',60,'DELMAR BROGLIO CARVALHO',NOW(),NOW()),
+('MI - PROJETO DE CIRCUITOS DIGITAIS','TEC498','2026.2',60,'FERNANDO FLORES SANTOS RIBEIRO',NOW(),NOW()),
+('MI - SISTEMAS DIGITAIS','TEC499','2026.2',60,'WILD FREITAS DA SILVA SANTOS',NOW(),NOW()),
+('ELETRÔNICA PARA PROCESSAMENTO DIGITAL DE SINAIS','TEC501','2026.2',30,'ARMANDO SANCA SANCA',NOW(),NOW()),
+('MI - CONCORRÊNCIA E CONECTIVIDADE','TEC502','2026.2',60,'ANTÔNIO AUGUSTO TEIXEIRA RIBEIRO COUTINHO',NOW(),NOW()),
+('PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS','TEC503','2026.2',60,'ANA CLAUDIA FIORIN PIANESSO',NOW(),NOW()),
+('MI - PROJETOS DE CIRCUITOS ELETRÔNICOS','TEC506','2026.2',60,'JOÃO BOSCO GERTRUDES MARCOS DE ARAÚJO PAZ',NOW(),NOW()),
+('SISTEMAS DISTRIBUÍDOS AVANÇADOS','TEC507','2026.2',60,'ELISÂNGELA OLIVEIRA CARNEIRO',NOW(),NOW()),
+('COMPUTAÇÃO DE ALTO DESEMPENHO','TEC508','2026.2',60,'ANGELO AMÂNCIO DUARTE',NOW(),NOW()),
+('MI - PROCESSAMENTO DIGITAL DE SINAIS','TEC513','2026.2',60,'ARMANDO SANCA SANCA',NOW(),NOW()),
+('METODOLOGIA DA PESQUISA E DESENVOLVIMENTO EM ENGENHARIA DE COMPUTAÇÃO','TEC517','2026.2',30,'ANA CLAUDIA FIORIN PIANESSO',NOW(),NOW()),
+('TRABALHO DE CONCLUSÃO DE CURSO I','TEC518','2026.2',30,'JOÃO BOSCO GERTRUDES Orientada MARCOS DE ARAÚJO PAZ',NOW(),NOW()),
+('TRABALHO DE CONCLUSÃO DE CURSO II','TEC519','2026.2',30,'MÁRCIA LISSANDRA MACHADO Orientada PRADO Legenda Disponíveis: Indica a quantidade de vagas disponíveis para o curso Ofertadas: Indica a quantidade de vagas disponíves na classe para pós alocação Ofertadas: Indica a quantidade de vagas que foi inicialmente planejada Ocupadas: Indica a quantidade de vagas da classe ocupadas em pós alocação Ocupadas: Total de vagas utilizadas Ocupadas Curso: Indica a quantidade de vagas ocupadas pelo curso em pós alocação Abertas: Quantidade de vagas adicionais posterior ao planejamento inicial Indica que Disciplina Cedidas: Total de vagas doadas para outro(s) Curso(s) ¹ Indica que Disciplina não faz parte da Matriz Curricular Recebidas: Total de vagas que foram transferidas de outros cursos. ² Indica que Disciplina é EAD ³ Indica que Disciplina é antecipada',NOW(),NOW());
 
 INSERT INTO "Turmas" (nome, disciplina, professor, cor, dias, horario, sala, vagas, "vagasOcupadas", ativa, "createdAt", "updatedAt") VALUES
-('Algoritmos','Algoritmos','Ramon Menezes','#2563eb','Seg, Qua','08:00 - 10:00','Lab 01',40,12,true,NOW(),NOW()),
-('Cálculo I','Cálculo I','Gabriela Chaves','#f59e0b','Ter, Qui','14:00 - 16:00','Sala 12',45,20,true,NOW(),NOW()),
-('Banco de Dados','Banco de Dados','Juliana Ramos','#7c3aed','Seg, Qua','19:00 - 21:00','Lab 02',35,18,true,NOW(),NOW()),
-('Circuitos Digitais','Circuitos Digitais','Fernando Paixão','#10b981','Sex','10:00 - 12:00','Lab 03',30,10,true,NOW(),NOW());
+('BIO606 TP01','EDUCAÇÃO AMBIENTAL','VIVIANE SOUZA MARTINS','#2563eb','Quarta','09:30 - 12:30','A definir',15,0,true,NOW(),NOW()),
+('CHF400 T03','CIÊNCIA POLÍTICA','CLODOALDO ALMEIDA DA PAIXÃO','#f59e0b','Quarta, Sexta','13:30 - 15:30','A definir',15,0,true,NOW(),NOW()),
+('CHF510 T01','HISTÓRIA E FILOSOFIA DA CIÊNCIA','JULIO CELSO RIBEIRO DE VASCONCELOS','#7c3aed','Quarta','15:30 - 18:30','A definir',15,0,true,NOW(),NOW()),
+('CIS107 T02','FUNDAMENTOS DIREITO PUBLICO E PRIVADO','ODEJANE LIMA FRANCO','#10b981','Segunda, Quarta','16:30 - 18:30','A definir',15,0,true,NOW(),NOW()),
+('CIS186 TP02','PLANEJAMENTO E ORÇAMENTO PÚBLICO','CÉLIA OLIVEIRA DE JESUS SACRAMENTO','#ef4444','Segunda, Quarta','16:30 - 18:30, 19:00 - 21:00','A definir',10,0,true,NOW(),NOW()),
+('CIS199 TP02','PROJETOS ECONÔMICOS E FINANCEIROS','FELIPE MASCARENHAS COUTO','#06b6d4','Quarta','19:00 - 21:00','A definir',10,0,true,NOW(),NOW()),
+('CIS248 T02','MERCADO DE CAPITAIS - A','ANA LUCIA CARVALHO SANTOS LEANDRO BATISTA DUARTE','#84cc16','Terça','21:00 - 23:00','A definir',10,0,true,NOW(),NOW()),
+('CIS301 T02','INTRODUÇÃO À ADMINISTRAÇÃO','ANA BARREIROS DE CARVALHO','#ec4899','Sexta, Sábado','21:00 - 23:00, 07:30 - 09:30','A definir',5,0,true,NOW(),NOW()),
+('CIS301 T03','INTRODUÇÃO À ADMINISTRAÇÃO','ANDRESSA DE SOUSA SANTOS FERREIRA','#6366f1','Terça, Quarta','19:00 - 21:00, 21:00 - 23:00','A definir',10,0,true,NOW(),NOW()),
+('CIS381 02','CONTABILIDADE GERAL I','JOÃO EVANGELISTA DOS SANTOS FILHO','#14b8a6','Sexta, Sábado','19:00 - 21:00, 09:30 - 11:30','PAT32 / UEFS',5,0,true,NOW(),NOW()),
+('CIS382 T01','INTRODUÇÃO À MACROECONOMIA','LUIZ CARLOS RIBEIRO SANTOS','#2563eb','Segunda, Quarta','19:00 - 21:00, 21:00 - 23:00','PAT10 / UEFS',5,0,true,NOW(),NOW()),
+('CIS385 T01','INTRODUÇÃO À MICROECONOMIA','FERNANDA OLIVEIRA CAIRES E CAIRES','#f59e0b','Terça, Quinta','19:00 - 21:00, 21:00 - 23:00','PAT19 / UEFS',10,0,true,NOW(),NOW()),
+('CIS392 T01','DIREITO TRABALHISTA E PREVIDENCIÁRIO','A definir','#7c3aed','Sexta, Sábado','19:00 - 21:00, 07:30 - 09:30','PAT17 / UEFS',10,0,true,NOW(),NOW()),
+('CIS425 TP01','PRINCÍPIO DE CONTAB. GERAL','DILSON CERQUEIRA DA SILVA','#10b981','Quarta, Sexta','21:00 - 23:00, 19:00 - 21:00','A definir',5,0,true,NOW(),NOW()),
+('CIS457 T01','PRINCÍPIOS DE ADMINISTRAÇÃO','ADRIELLY FERREIRA MORAIS','#ef4444','Segunda, Terça','16:30 - 18:30','A definir',25,0,true,NOW(),NOW()),
+('EDU113 TP05','EDUCAÇÃO ESPECIAL E POLÍTICAS EDUCACIONAIS INCLUSIVAS','A definir','#06b6d4','Terça','13:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('EDU311 TP03','RELAÇÕES ÉTNICO-RACIAIS NA ESCOLA','EDUARDO OLIVEIRA MIRANDA','#84cc16','Quarta, Sexta','17:30 - 18:30, 15:30 - 18:30','A definir',10,0,true,NOW(),NOW()),
+('EXA085 TP01','INTELIGÊNCIA ARTIFICIAL GENERATIVA NA EDUCAÇÃO','GABRIELA RIBEIRO PEIXOTO REZENDE PINTO','#ec4899','Terça, Quinta','07:30 - 09:30','A definir',30,0,true,NOW(),NOW()),
+('EXA417 T0P01','QUÍMICA GERAL E DE MATERIAIS','HUMBERTO TALMA DA CUNHA','#6366f1','Quarta','11:30 - 12:30, 09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA543 T01','INTRODUÇÃO AO CÁLCULO','JANY SANTOS SOUZA GOULART','#14b8a6','Quarta, Sexta','09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA544 T01','LINGUAGENS FORMAIS E COMPILADORES','MATHEUS GIOVANNI PIRES','#2563eb','Terça, Quinta','13:30 - 15:30','A definir',50,0,true,NOW(),NOW()),
+('EXA545 TP01','TEORIA DA COMPUTAÇÃO','PÂMELA MICHELE CÂNDIDA CORTEZ','#f59e0b','Quarta, Sexta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA612 E01','ESTÁGIO','LARISSA ROCHA SOARES BASTOS','#7c3aed','Sábado','13:30 - 15:30','A definir',50,0,true,NOW(),NOW()),
+('EXA613 TP01','MI ENGENHARIA DE SOFTWARE','LARISSA ROCHA SOARES BASTOS','#10b981','Quarta, Sexta','15:30 - 17:30','A definir',11,0,true,NOW(),NOW()),
+('EXA613 TP02','MI ENGENHARIA DE SOFTWARE','BIANCA LEITE SANTANA','#ef4444','Quarta, Sexta','15:30 - 17:30','A definir',11,0,true,NOW(),NOW()),
+('EXA613 TP03','MI ENGENHARIA DE SOFTWARE','VICTOR TRAVASSOS SARINHO','#06b6d4','Quarta, Sexta','15:30 - 17:30','A definir',11,0,true,NOW(),NOW()),
+('EXA613 TP04','MI ENGENHARIA DE SOFTWARE','JULIO CÉSAR ANDRADE SILVA','#84cc16','Quarta, Sexta','15:30 - 17:30','A definir',11,0,true,NOW(),NOW()),
+('EXA614 TP01','TÓPICOS DE FORMAÇÃO HUMANÍSTICA','DAVID MOISES BARRETO DOS SANTOS','#ec4899','Terça, Quinta','09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA615 TP01','ÉTICA EM COMPUTAÇÃO','GABRIELA RIBEIRO PEIXOTO Teórica-Prática REZENDE PINTO','#6366f1','Terça, Quinta','09:30 - 11:30, 09:30 - 10:30, 10:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA616 TP01','EMPREENDEDORISMO I','ANGELO CONRADO LOULA','#14b8a6','Terça, Quinta','09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA619 TP01','INFORMÁTICA NA EDUCAÇÃO','CLAUDIA PINTO PEREIRA SENA','#2563eb','Terça, Quinta','15:30 - 17:30','A definir',25,0,true,NOW(),NOW()),
+('EXA620 TP01','JOGOS DIGITAIS','VICTOR TRAVASSOS SARINHO','#f59e0b','Terça, Quinta','09:30 - 11:30','A definir',20,0,true,NOW(),NOW()),
+('EXA622 TP01','EXTENSÃO EM COMPUTAÇÃO I','JOÃO BATISTA DA ROCHA JUNIOR TIAGO AMADOR COELHO','#7c3aed','Segunda, Quarta','09:30 - 12:30','A definir',35,0,true,NOW(),NOW()),
+('EXA623 TP01','FINANÇAS COMPUTACIONAIS','CARLOS ALBERTO RODRIGUES','#10b981','Terça, Quinta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA702 T03','ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','MOACYR RODRIGUES DE MIRANDA JÚNIOR','#ef4444','Quarta, Sexta','07:30 - 09:30','A definir',45,0,true,NOW(),NOW()),
+('EXA702 T04','ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','JUCINEIDE SILVA SANTOS','#06b6d4','Quarta, Sexta','13:30 - 15:30','A definir',20,0,true,NOW(),NOW()),
+('EXA703 T03','ÁLGEBRA LINEAR I E','ADEMAKSON SOUZA ARAÚJO','#84cc16','Terça, Quinta','09:30 - 11:30','A definir',55,0,true,NOW(),NOW()),
+('EXA704 T03','CÁLCULO DIFERENCIAL E INTEGRAL I E','ROGÉRIO GOMES MATIAS','#ec4899','Quarta, Sexta','09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA704 T05','CÁLCULO DIFERENCIAL E INTEGRAL I E','ROGÉRIO GOMES MATIAS','#6366f1','Quarta, Sexta','07:30 - 09:30','A definir',15,0,true,NOW(),NOW()),
+('EXA705 T03','CÁLCULO DIFERENCIAL E INTEGRAL II E','VICTOR BORGES CARNEIRO','#14b8a6','Terça, Quinta','10:30 - 12:30, 09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA705 T04','CÁLCULO DIFERENCIAL E INTEGRAL II E','CRISTIANO HENRIQUE DE OLIVEIRA MASCARENHAS','#2563eb','Quarta, Quinta','13:30 - 15:30, 09:30 - 11:30','A definir',30,0,true,NOW(),NOW()),
+('EXA706 T03','EQUAÇÕES DIFERENCIAIS I-E','DARLAN FERREIRA DE OLIVEIRA','#f59e0b','Quarta, Sexta','09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('EXA709 T03','PROBABILIDADE E ESTATÍSTICA I E','REINALDA SOUZA OLIVEIRA','#7c3aed','Terça, Quinta','07:30 - 09:30','A definir',45,0,true,NOW(),NOW()),
+('EXA709 T04','PROBABILIDADE E ESTATÍSTICA I E','REINALDA SOUZA OLIVEIRA','#10b981','Terça, Quinta','13:30 - 15:30','A definir',20,0,true,NOW(),NOW()),
+('EXA801 T01','ALGORITMOS E PROGRAMAÇÃO I','CLAUDIA PINTO PEREIRA SENA','#ef4444','Terça, Quinta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA801 T02','ALGORITMOS E PROGRAMAÇÃO I','MICHELE FÚLVIA ANGELO','#06b6d4','Terça, Quinta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA802 TP01','LÓGICA PARA COMPUTAÇÃO','THIAGO D''MARTIN MAIA','#84cc16','Quarta, Sexta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA805 T01','ALGORITMOS E PROGRAMAÇÃO II','BIANCA LEITE SANTANA','#ec4899','Terça, Quinta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('EXA805 T02','ALGORITMOS E PROGRAMAÇÃO II','ROBERTO ALMEIDA BITTENCOURT','#6366f1','Terça, Quinta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA806 T01','ESTRUTURAS DE DADOS','PÂMELA MICHELE CÂNDIDA CORTEZ','#14b8a6','Terça, Quinta','15:30 - 17:30','A definir',35,0,true,NOW(),NOW()),
+('EXA806 T02','ESTRUTURAS DE DADOS','ANA LUCIA LIMA MARREIROS MAIA','#2563eb','Terça, Quinta','15:30 - 17:30','A definir',35,0,true,NOW(),NOW()),
+('EXA807 T01','ESTRUTURAS DISCRETAS','THIAGO PIRES SANTANA','#f59e0b','Terça, Quinta','07:30 - 09:30','A definir',48,0,true,NOW(),NOW()),
+('EXA809 T01','ENGENHARIA DE SOFTWARE','VICTOR TRAVASSOS SARINHO','#7c3aed','Quarta, Sexta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA809 T02','ENGENHARIA DE SOFTWARE','LARISSA ROCHA SOARES BASTOS','#10b981','Quarta, Sexta','13:30 - 15:30','A definir',30,0,true,NOW(),NOW()),
+('EXA810 T01','BANCOS DE DADOS','RODRIGO TRIPODI CALUMBY','#ef4444','Quarta','09:30 - 11:30','A definir',50,0,true,NOW(),NOW()),
+('EXA813 TP01','ANÁLISE E PROJETO DE ALGORITMOS','THIAGO D''MARTIN MAIA','#06b6d4','Terça, Quinta','15:30 - 17:30','A definir',50,0,true,NOW(),NOW()),
+('EXA828 E01','ESTÁGIO','LARISSA ROCHA SOARES BASTOS','#84cc16','Sábado','15:30 - 17:30','A definir',50,0,true,NOW(),NOW()),
+('EXA854 TP01','MI - ALGORITMOS','JULIO CÉSAR ANDRADE SILVA','#ec4899','Quarta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('EXA854 TP02','MI - ALGORITMOS','MICHELE FÚLVIA ANGELO','#6366f1','Quarta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('EXA854 TP03','MI - ALGORITMOS','BIANCA LEITE SANTANA','#14b8a6','Quarta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('EXA854 TP04','MI - ALGORITMOS','CLAUDIA PINTO PEREIRA SENA TIAGO AMADOR COELHO','#2563eb','Quarta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('EXA854 TP05','MI - ALGORITMOS','THIAGO ANTONIO MELO EUZÉBIO','#f59e0b','Quarta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('EXA861 T01','INTRODUÇÃO À ENGENHARIA DE COMPUTAÇÃO','MICHELE FÚLVIA ANGELO','#7c3aed','Quarta','15:30 - 17:30','A definir',45,0,true,NOW(),NOW()),
+('EXA863 TP01','MI - PROGRAMAÇÃO','BIANCA LEITE SANTANA','#10b981','Terça','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('EXA863 TP02','MI - PROGRAMAÇÃO','CARLOS ALBERTO RODRIGUES','#ef4444','Terça','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('EXA863 TP03','MI - PROGRAMAÇÃO','MATHEUS GIOVANNI PIRES','#06b6d4','Terça','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('EXA863 TP04','MI - PROGRAMAÇÃO','ROBERTO ALMEIDA BITTENCOURT','#84cc16','Terça','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('EXA863 TP05','MI - PROGRAMAÇÃO','DAVID MOISES BARRETO DOS SANTOS','#ec4899','Terça','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('EXA871 TP01','ARQUITETURA E DESIGN DE SOFTWARE','JOSÉ AMÂNCIO MACEDO SANTOS','#6366f1','Terça, Quinta','15:30 - 17:30','A definir',20,0,true,NOW(),NOW()),
+('FIS155 T04','FÍSICA I','FREDSON BRAZ MATOS DOS SANTOS','#14b8a6','Terça, Quinta','07:30 - 09:30','A definir',45,0,true,NOW(),NOW()),
+('FIS156 P0301','FÍSICA EXPERIMENTAL I','ISADORA TAIRINNE DE SENA BASTOS','#2563eb','Terça','10:30 - 12:30','MP43 / UEFS',15,0,true,NOW(),NOW()),
+('FIS156 P0302','FÍSICA EXPERIMENTAL I','EDUARDO BRESCANSIN DE AMORES','#f59e0b','Quinta','09:30 - 11:30','MP43 / UEFS',15,0,true,NOW(),NOW()),
+('FIS156 P0303','FÍSICA EXPERIMENTAL I','CARLOS EDUARDO MAGALHÃES BATISTA','#7c3aed','Quarta','07:30 - 09:30','MP43 / UEFS',15,0,true,NOW(),NOW()),
+('FIS156 P04','FÍSICA EXPERIMENTAL I','ISADORA TAIRINNE DE SENA BASTOS','#10b981','Terça','10:30 - 12:30','MP43 / UEFS',15,0,true,NOW(),NOW()),
+('FIS156 P05','FÍSICA EXPERIMENTAL I','EDUARDO BRESCANSIN DE AMORES','#ef4444','Quinta','09:30 - 11:30','MP43 / UEFS',15,0,true,NOW(),NOW()),
+('FIS156 P06','FÍSICA EXPERIMENTAL I','CARLOS EDUARDO MAGALHÃES BATISTA','#06b6d4','Quarta','07:30 - 09:30','MP43 / UEFS',15,0,true,NOW(),NOW()),
+('FIS160 T02','FÍSICA III','ERNANDO SILVA FERREIRA','#84cc16','Quarta, Sexta','07:30 - 09:30','A definir',40,0,true,NOW(),NOW()),
+('FIS161 P0301','FÍSICA EXPERIMENTAL III','ERNANDO SILVA FERREIRA','#ec4899','Quarta','09:30 - 11:30','MP42 / UEFS',20,0,true,NOW(),NOW()),
+('FIS161 P0302','FÍSICA EXPERIMENTAL III','CARLOS EDUARDO MAGALHÃES BATISTA','#6366f1','Sexta','09:30 - 11:30','MP42 / UEFS',20,0,true,NOW(),NOW()),
+('LET808 T09','LIBRAS: NOÇÕES BÁSICAS','DANIELA BETÂNIA DOS SANTOS FERREIRA','#14b8a6','Quinta','19:00 - 22:00','A definir',25,0,true,NOW(),NOW()),
+('TEC167 TP01','CIÊNCIAS DO AMBIENTE - E','ZANNA MARIA RODRIGUES DE MATOS','#2563eb','Quarta','09:30 - 12:30','A definir',15,0,true,NOW(),NOW()),
+('TEC217 TP01','MÉTODOS COMPUTACIONAIS','MARCOS DE ARAÚJO PAZ','#f59e0b','Terça, Quinta','15:30 - 17:30','A definir',21,0,true,NOW(),NOW()),
+('TEC217 TP02','MÉTODOS COMPUTACIONAIS','A definir','#7c3aed','Segunda, Sexta','15:30 - 17:30, 09:30 - 11:30','A definir',21,0,true,NOW(),NOW()),
+('TEC218 T01','CIRCUITOS ELÉTRICOS','DELMAR BROGLIO CARVALHO','#10b981','Terça, Quinta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('TEC218 T02','CIRCUITOS ELÉTRICOS','MÁRCIA LISSANDRA MACHADO PRADO','#ef4444','Terça, Quinta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('TEC218 T03','CIRCUITOS ELÉTRICOS','JOÃO BOSCO GERTRUDES MARCOS DE ARAÚJO PAZ','#06b6d4','Terça, Quinta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('TEC218 T04','CIRCUITOS ELÉTRICOS','ELIO PITHON SARNO FILHO','#84cc16','Terça, Quinta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('TEC219 T01','ELETRÔNICA GERAL','MÁRCIA LISSANDRA MACHADO PRADO','#ec4899','Segunda','13:30 - 15:30','A definir',40,0,true,NOW(),NOW()),
+('TEC220 TP01','SISTEMAS ROBÓTICOS AUTÔNOMOS','ARMANDO SANCA SANCA','#6366f1','Terça, Quinta','13:30 - 15:30','A definir',10,0,true,NOW(),NOW()),
+('TEC221 TP01','TÓPICOS DE FORMAÇÃO COMPLEMENTAR','ROSARIA DA PAIXÃO TRINDADE','#14b8a6','Terça, Quinta','09:30 - 11:30','A definir',45,0,true,NOW(),NOW()),
+('TEC222 TP01','TRABALHO DE CONCLUSÃO DE CURSO II','MÁRCIA LISSANDRA MACHADO PRADO','#2563eb','Sábado','15:30 - 17:30','A definir',40,0,true,NOW(),NOW()),
+('TEC224 TP01','EXTENSÃO EM COMPUTAÇÃO II','ROSARIA DA PAIXÃO TRINDADE','#f59e0b','Segunda, Quarta','13:30 - 16:30','A definir',30,0,true,NOW(),NOW()),
+('TEC401 T01','CIRCUITOS DIGITAIS','THIAGO CERQUEIRA DE JESUS','#7c3aed','Terça','07:30 - 09:30','A definir',45,0,true,NOW(),NOW()),
+('TEC402 T01','ARQUITETURA DE COMPUTADORES','ANGELO AMÂNCIO DUARTE','#10b981','Quarta, Sexta','07:30 - 09:30','A definir',40,0,true,NOW(),NOW()),
+('TEC408 T01','SISTEMAS OPERACIONAIS','ELINALDO SANTOS DE GÓES JÚNIOR','#ef4444','Terça, Quinta','13:30 - 15:30','A definir',25,0,true,NOW(),NOW()),
+('TEC408 T02','SISTEMAS OPERACIONAIS','ANA CLAUDIA FIORIN PIANESSO','#06b6d4','Terça, Quinta','13:30 - 15:30','A definir',25,0,true,NOW(),NOW()),
+('TEC409 T01','REDES DE COMPUTADORES','ANTÔNIO AUGUSTO TEIXEIRA RIBEIRO COUTINHO','#84cc16','Terça, Quinta','13:30 - 15:30','A definir',25,0,true,NOW(),NOW()),
+('TEC409 T02','REDES DE COMPUTADORES','TALITA ROCHA PINHEIRO','#ec4899','Terça, Quinta','13:30 - 15:30','A definir',25,0,true,NOW(),NOW()),
+('TEC412 T01','SINAIS E SISTEMAS','ELIO PITHON SARNO FILHO','#6366f1','Terça, Quinta','15:30 - 17:30','A definir',45,0,true,NOW(),NOW()),
+('TEC430 T01','PROCESSAMENTO DIGITAL DE SINAIS','EDGAR SILVA JUNIOR','#14b8a6','Quarta','15:30 - 17:30','A definir',35,0,true,NOW(),NOW()),
+('TEC433 TP01','FORMAÇÃO E VISUALIZAÇÃO DE IMAGENS DIGITAIS','EDGAR SILVA JUNIOR','#2563eb','Terça, Quinta','15:30 - 17:30','A definir',30,0,true,NOW(),NOW()),
+('TEC434 TP01','COMPUTAÇÃO VISUAL','FERNANDO FLORES SANTOS RIBEIRO','#f59e0b','Segunda, Sexta','15:30 - 17:30','A definir',21,0,true,NOW(),NOW()),
+('TEC451 TP01','SEGURANÇA DE COMPUTADORES E CRIPTOGRAFIA','A definir','#7c3aed','Terça, Quinta','09:30 - 11:30','A definir',20,0,true,NOW(),NOW()),
+('TEC467 TP01','INTRODUÇÃO A SISTEMAS DE CONTROLE','MÁRCIA LISSANDRA MACHADO PRADO','#10b981','Terça, Quinta','09:30 - 11:30','A definir',12,0,true,NOW(),NOW()),
+('TEC497 P01','INTRODUÇÃO A ELETRÔNICA','DELMAR BROGLIO CARVALHO','#ef4444','Terça','15:30 - 17:30','A definir',13,0,true,NOW(),NOW()),
+('TEC497 P02','INTRODUÇÃO A ELETRÔNICA','DELMAR BROGLIO CARVALHO','#06b6d4','Quinta','15:30 - 17:30','A definir',13,0,true,NOW(),NOW()),
+('TEC497 P03','INTRODUÇÃO A ELETRÔNICA','DELMAR BROGLIO CARVALHO','#84cc16','Segunda','13:30 - 15:30','A definir',13,0,true,NOW(),NOW()),
+('TEC497 P04','INTRODUÇÃO A ELETRÔNICA','ELIO PITHON SARNO FILHO','#ec4899','Quinta','07:30 - 09:30','A definir',13,0,true,NOW(),NOW()),
+('TEC498 TP01','MI - PROJETO DE CIRCUITOS DIGITAIS','WILD FREITAS DA SILVA SANTOS','#6366f1','Quarta, Sexta','09:30 - 11:30, 13:30 - 15:30','A definir',12,0,true,NOW(),NOW()),
+('TEC498 TP03','MI - PROJETO DE CIRCUITOS DIGITAIS','FERNANDO FLORES SANTOS RIBEIRO','#14b8a6','Segunda, Sexta','13:30 - 15:30','A definir',12,0,true,NOW(),NOW()),
+('TEC498 TP04','MI - PROJETO DE CIRCUITOS DIGITAIS','WILD FREITAS DA SILVA SANTOS','#2563eb','Quarta, Sexta','09:30 - 11:30','A definir',12,0,true,NOW(),NOW()),
+('TEC499 TP01','MI - SISTEMAS DIGITAIS','THIAGO CERQUEIRA DE JESUS','#f59e0b','Quarta, Sexta','13:30 - 15:30','A definir',11,0,true,NOW(),NOW()),
+('TEC499 TP02','MI - SISTEMAS DIGITAIS','ANGELO AMÂNCIO DUARTE','#7c3aed','Quarta, Sexta','13:30 - 15:30','A definir',11,0,true,NOW(),NOW()),
+('TEC499 TP03','MI - SISTEMAS DIGITAIS','WILD FREITAS DA SILVA SANTOS','#10b981','Quarta, Sexta','15:30 - 17:30','A definir',11,0,true,NOW(),NOW()),
+('TEC501 T01','ELETRÔNICA PARA PROCESSAMENTO DIGITAL DE SINAIS','ARMANDO SANCA SANCA','#ef4444','Sexta','15:30 - 17:30','A definir',30,0,true,NOW(),NOW()),
+('TEC502 TP01','MI - CONCORRÊNCIA E CONECTIVIDADE','ANTÔNIO AUGUSTO TEIXEIRA RIBEIRO COUTINHO','#06b6d4','Terça, Quinta','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC502 TP02','MI - CONCORRÊNCIA E CONECTIVIDADE','ELINALDO SANTOS DE GÓES JÚNIOR','#84cc16','Terça, Quinta','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC502 TP03','MI - CONCORRÊNCIA E CONECTIVIDADE','ELISÂNGELA OLIVEIRA CARNEIRO','#ec4899','Terça, Quinta','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC502 TP04','MI - CONCORRÊNCIA E CONECTIVIDADE','TALITA ROCHA PINHEIRO','#6366f1','Terça, Quinta','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC503 TP01','PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS','ELIO PITHON SARNO FILHO','#14b8a6','Terça','07:30 - 09:30','A definir',25,0,true,NOW(),NOW()),
+('TEC503 TP02','PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS','ANA CLAUDIA FIORIN PIANESSO','#2563eb','Sexta','15:30 - 17:30','A definir',25,0,true,NOW(),NOW()),
+('TEC506 TP01','MI - PROJETOS DE CIRCUITOS ELETRÔNICOS','DELMAR BROGLIO CARVALHO','#f59e0b','Segunda','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC506 TP02','MI - PROJETOS DE CIRCUITOS ELETRÔNICOS','MÁRCIA LISSANDRA MACHADO PRADO','#7c3aed','Segunda','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC506 TP03','MI - PROJETOS DE CIRCUITOS ELETRÔNICOS','JOÃO BOSCO GERTRUDES MARCOS DE ARAÚJO PAZ','#10b981','Segunda','15:30 - 17:30','A definir',10,0,true,NOW(),NOW()),
+('TEC507 TP01','SISTEMAS DISTRIBUÍDOS AVANÇADOS','ELISÂNGELA OLIVEIRA CARNEIRO','#ef4444','Quarta, Sexta','09:30 - 11:30','A definir',20,0,true,NOW(),NOW()),
+('TEC508 TP01','COMPUTAÇÃO DE ALTO DESEMPENHO','ANGELO AMÂNCIO DUARTE','#06b6d4','Quarta, Sexta','09:30 - 11:30','A definir',10,0,true,NOW(),NOW()),
+('TEC513 TP01','MI - PROCESSAMENTO DIGITAL DE SINAIS','ARMANDO SANCA SANCA','#84cc16','Quarta, Sexta','13:30 - 15:30','A definir',11,0,true,NOW(),NOW()),
+('TEC513 TP02','MI - PROCESSAMENTO DIGITAL DE SINAIS','EDGAR SILVA JUNIOR','#ec4899','Quarta, Sexta','13:30 - 15:30','A definir',11,0,true,NOW(),NOW()),
+('TEC517 T01','METODOLOGIA DA PESQUISA E DESENVOLVIMENTO EM ENGENHARIA DE COMPUTAÇÃO','ANA CLAUDIA FIORIN PIANESSO','#6366f1','Quinta','07:30 - 09:30','A definir',45,0,true,NOW(),NOW()),
+('TEC518 TP01','TRABALHO DE CONCLUSÃO DE CURSO I','JOÃO BOSCO GERTRUDES Orientada MARCOS DE ARAÚJO PAZ','#14b8a6','Sábado','09:30 - 11:30','A definir',50,0,true,NOW(),NOW()),
+('TEC519 TP01','TRABALHO DE CONCLUSÃO DE CURSO II','MÁRCIA LISSANDRA MACHADO Orientada PRADO Legenda Disponíveis: Indica a quantidade de vagas disponíveis para o curso Ofertadas: Indica a quantidade de vagas disponíves na classe para pós alocação Ofertadas: Indica a quantidade de vagas que foi inicialmente planejada Ocupadas: Indica a quantidade de vagas da classe ocupadas em pós alocação Ocupadas: Total de vagas utilizadas Ocupadas Curso: Indica a quantidade de vagas ocupadas pelo curso em pós alocação Abertas: Quantidade de vagas adicionais posterior ao planejamento inicial Indica que Disciplina Cedidas: Total de vagas doadas para outro(s) Curso(s) ¹ Indica que Disciplina não faz parte da Matriz Curricular Recebidas: Total de vagas que foram transferidas de outros cursos. ² Indica que Disciplina é EAD ³ Indica que Disciplina é antecipada','#2563eb','Sábado','09:30 - 11:30','A definir',50,0,true,NOW(),NOW());
 
 INSERT INTO "Horarios" (disciplina, periodo, "diaSemana", "horarioInicio", "horarioFim", "createdAt", "updatedAt") VALUES
-('Algoritmos','Manhã','Segunda','08:00','10:00',NOW(),NOW()),
-('Cálculo I','Tarde','Terça','14:00','16:00',NOW(),NOW()),
-('Banco de Dados','Noite','Segunda','19:00','21:00',NOW(),NOW());
+('EDUCAÇÃO AMBIENTAL','Manhã','Quarta','09:30','12:30',NOW(),NOW()),
+('CIÊNCIA POLÍTICA','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('CIÊNCIA POLÍTICA','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('HISTÓRIA E FILOSOFIA DA CIÊNCIA','Tarde','Quarta','15:30','18:30',NOW(),NOW()),
+('FUNDAMENTOS DIREITO PUBLICO E PRIVADO','Tarde','Segunda','16:30','18:30',NOW(),NOW()),
+('FUNDAMENTOS DIREITO PUBLICO E PRIVADO','Tarde','Quarta','16:30','18:30',NOW(),NOW()),
+('PLANEJAMENTO E ORÇAMENTO PÚBLICO','Tarde','Segunda','16:30','18:30',NOW(),NOW()),
+('PLANEJAMENTO E ORÇAMENTO PÚBLICO','Noite','Quarta','19:00','21:00',NOW(),NOW()),
+('PROJETOS ECONÔMICOS E FINANCEIROS','Noite','Quarta','19:00','21:00',NOW(),NOW()),
+('MERCADO DE CAPITAIS - A','Noite','Terça','21:00','23:00',NOW(),NOW()),
+('INTRODUÇÃO À ADMINISTRAÇÃO','Noite','Sexta','21:00','23:00',NOW(),NOW()),
+('INTRODUÇÃO À ADMINISTRAÇÃO','Manhã','Sábado','07:30','09:30',NOW(),NOW()),
+('INTRODUÇÃO À ADMINISTRAÇÃO','Noite','Terça','19:00','21:00',NOW(),NOW()),
+('INTRODUÇÃO À ADMINISTRAÇÃO','Noite','Quarta','21:00','23:00',NOW(),NOW()),
+('CONTABILIDADE GERAL I','Noite','Sexta','19:00','21:00',NOW(),NOW()),
+('CONTABILIDADE GERAL I','Manhã','Sábado','09:30','11:30',NOW(),NOW()),
+('INTRODUÇÃO À MACROECONOMIA','Noite','Segunda','19:00','21:00',NOW(),NOW()),
+('INTRODUÇÃO À MACROECONOMIA','Noite','Quarta','21:00','23:00',NOW(),NOW()),
+('INTRODUÇÃO À MICROECONOMIA','Noite','Terça','19:00','21:00',NOW(),NOW()),
+('INTRODUÇÃO À MICROECONOMIA','Noite','Quinta','21:00','23:00',NOW(),NOW()),
+('DIREITO TRABALHISTA E PREVIDENCIÁRIO','Noite','Sexta','19:00','21:00',NOW(),NOW()),
+('DIREITO TRABALHISTA E PREVIDENCIÁRIO','Manhã','Sábado','07:30','09:30',NOW(),NOW()),
+('PRINCÍPIO DE CONTAB. GERAL','Noite','Quarta','21:00','23:00',NOW(),NOW()),
+('PRINCÍPIO DE CONTAB. GERAL','Noite','Sexta','19:00','21:00',NOW(),NOW()),
+('PRINCÍPIOS DE ADMINISTRAÇÃO','Tarde','Segunda','16:30','18:30',NOW(),NOW()),
+('PRINCÍPIOS DE ADMINISTRAÇÃO','Tarde','Terça','16:30','18:30',NOW(),NOW()),
+('EDUCAÇÃO ESPECIAL E POLÍTICAS EDUCACIONAIS INCLUSIVAS','Tarde','Terça','13:30','17:30',NOW(),NOW()),
+('RELAÇÕES ÉTNICO-RACIAIS NA ESCOLA','Tarde','Quarta','17:30','18:30',NOW(),NOW()),
+('RELAÇÕES ÉTNICO-RACIAIS NA ESCOLA','Tarde','Sexta','15:30','18:30',NOW(),NOW()),
+('INTELIGÊNCIA ARTIFICIAL GENERATIVA NA EDUCAÇÃO','Manhã','Terça','07:30','09:30',NOW(),NOW()),
+('INTELIGÊNCIA ARTIFICIAL GENERATIVA NA EDUCAÇÃO','Manhã','Quinta','07:30','09:30',NOW(),NOW()),
+('QUÍMICA GERAL E DE MATERIAIS','Manhã','Quarta','11:30','12:30',NOW(),NOW()),
+('QUÍMICA GERAL E DE MATERIAIS','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('INTRODUÇÃO AO CÁLCULO','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('INTRODUÇÃO AO CÁLCULO','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('LINGUAGENS FORMAIS E COMPILADORES','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('LINGUAGENS FORMAIS E COMPILADORES','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('TEORIA DA COMPUTAÇÃO','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('TEORIA DA COMPUTAÇÃO','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('ESTÁGIO','Tarde','Sábado','13:30','15:30',NOW(),NOW()),
+('MI ENGENHARIA DE SOFTWARE','Tarde','Quarta','15:30','17:30',NOW(),NOW()),
+('MI ENGENHARIA DE SOFTWARE','Tarde','Sexta','15:30','17:30',NOW(),NOW()),
+('TÓPICOS DE FORMAÇÃO HUMANÍSTICA','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('TÓPICOS DE FORMAÇÃO HUMANÍSTICA','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('ÉTICA EM COMPUTAÇÃO','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('ÉTICA EM COMPUTAÇÃO','Manhã','Quinta','09:30','10:30',NOW(),NOW()),
+('ÉTICA EM COMPUTAÇÃO','Manhã','Quinta','10:30','11:30',NOW(),NOW()),
+('EMPREENDEDORISMO I','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('EMPREENDEDORISMO I','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('INFORMÁTICA NA EDUCAÇÃO','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('INFORMÁTICA NA EDUCAÇÃO','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('JOGOS DIGITAIS','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('JOGOS DIGITAIS','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('EXTENSÃO EM COMPUTAÇÃO I','Manhã','Segunda','09:30','12:30',NOW(),NOW()),
+('EXTENSÃO EM COMPUTAÇÃO I','Manhã','Quarta','09:30','12:30',NOW(),NOW()),
+('FINANÇAS COMPUTACIONAIS','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('FINANÇAS COMPUTACIONAIS','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','Manhã','Quarta','07:30','09:30',NOW(),NOW()),
+('ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','Manhã','Sexta','07:30','09:30',NOW(),NOW()),
+('ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('ÁLGEBRA VETORIAL E GEOMETRIA ANALÍTICA','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('ÁLGEBRA LINEAR I E','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('ÁLGEBRA LINEAR I E','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL I E','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL I E','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL I E','Manhã','Quarta','07:30','09:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL I E','Manhã','Sexta','07:30','09:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL II E','Manhã','Terça','10:30','12:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL II E','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('CÁLCULO DIFERENCIAL E INTEGRAL II E','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('EQUAÇÕES DIFERENCIAIS I-E','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('EQUAÇÕES DIFERENCIAIS I-E','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('PROBABILIDADE E ESTATÍSTICA I E','Manhã','Terça','07:30','09:30',NOW(),NOW()),
+('PROBABILIDADE E ESTATÍSTICA I E','Manhã','Quinta','07:30','09:30',NOW(),NOW()),
+('PROBABILIDADE E ESTATÍSTICA I E','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('PROBABILIDADE E ESTATÍSTICA I E','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('ALGORITMOS E PROGRAMAÇÃO I','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('ALGORITMOS E PROGRAMAÇÃO I','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('LÓGICA PARA COMPUTAÇÃO','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('LÓGICA PARA COMPUTAÇÃO','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('ALGORITMOS E PROGRAMAÇÃO II','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('ALGORITMOS E PROGRAMAÇÃO II','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('ESTRUTURAS DE DADOS','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('ESTRUTURAS DE DADOS','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('ESTRUTURAS DISCRETAS','Manhã','Terça','07:30','09:30',NOW(),NOW()),
+('ESTRUTURAS DISCRETAS','Manhã','Quinta','07:30','09:30',NOW(),NOW()),
+('ENGENHARIA DE SOFTWARE','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('ENGENHARIA DE SOFTWARE','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('BANCOS DE DADOS','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('ANÁLISE E PROJETO DE ALGORITMOS','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('ANÁLISE E PROJETO DE ALGORITMOS','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('ESTÁGIO','Tarde','Sábado','15:30','17:30',NOW(),NOW()),
+('MI - ALGORITMOS','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('INTRODUÇÃO À ENGENHARIA DE COMPUTAÇÃO','Tarde','Quarta','15:30','17:30',NOW(),NOW()),
+('MI - PROGRAMAÇÃO','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('ARQUITETURA E DESIGN DE SOFTWARE','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('ARQUITETURA E DESIGN DE SOFTWARE','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL I','Manhã','Terça','10:30','12:30',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL I','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL I','Manhã','Quarta','07:30','09:30',NOW(),NOW()),
+('FÍSICA III','Manhã','Quarta','07:30','09:30',NOW(),NOW()),
+('FÍSICA III','Manhã','Sexta','07:30','09:30',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL III','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('FÍSICA EXPERIMENTAL III','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('LIBRAS: NOÇÕES BÁSICAS','Noite','Quinta','19:00','22:00',NOW(),NOW()),
+('CIÊNCIAS DO AMBIENTE - E','Manhã','Quarta','09:30','12:30',NOW(),NOW()),
+('MÉTODOS COMPUTACIONAIS','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('MÉTODOS COMPUTACIONAIS','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('MÉTODOS COMPUTACIONAIS','Tarde','Segunda','15:30','17:30',NOW(),NOW()),
+('MÉTODOS COMPUTACIONAIS','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('CIRCUITOS ELÉTRICOS','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('CIRCUITOS ELÉTRICOS','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('ELETRÔNICA GERAL','Tarde','Segunda','13:30','15:30',NOW(),NOW()),
+('SISTEMAS ROBÓTICOS AUTÔNOMOS','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('SISTEMAS ROBÓTICOS AUTÔNOMOS','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('TÓPICOS DE FORMAÇÃO COMPLEMENTAR','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('TÓPICOS DE FORMAÇÃO COMPLEMENTAR','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('TRABALHO DE CONCLUSÃO DE CURSO II','Tarde','Sábado','15:30','17:30',NOW(),NOW()),
+('EXTENSÃO EM COMPUTAÇÃO II','Tarde','Segunda','13:30','16:30',NOW(),NOW()),
+('EXTENSÃO EM COMPUTAÇÃO II','Tarde','Quarta','13:30','16:30',NOW(),NOW()),
+('CIRCUITOS DIGITAIS','Manhã','Terça','07:30','09:30',NOW(),NOW()),
+('ARQUITETURA DE COMPUTADORES','Manhã','Quarta','07:30','09:30',NOW(),NOW()),
+('ARQUITETURA DE COMPUTADORES','Manhã','Sexta','07:30','09:30',NOW(),NOW()),
+('SISTEMAS OPERACIONAIS','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('SISTEMAS OPERACIONAIS','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('REDES DE COMPUTADORES','Tarde','Terça','13:30','15:30',NOW(),NOW()),
+('REDES DE COMPUTADORES','Tarde','Quinta','13:30','15:30',NOW(),NOW()),
+('SINAIS E SISTEMAS','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('SINAIS E SISTEMAS','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('PROCESSAMENTO DIGITAL DE SINAIS','Tarde','Quarta','15:30','17:30',NOW(),NOW()),
+('FORMAÇÃO E VISUALIZAÇÃO DE IMAGENS DIGITAIS','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('FORMAÇÃO E VISUALIZAÇÃO DE IMAGENS DIGITAIS','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('COMPUTAÇÃO VISUAL','Tarde','Segunda','15:30','17:30',NOW(),NOW()),
+('COMPUTAÇÃO VISUAL','Tarde','Sexta','15:30','17:30',NOW(),NOW()),
+('SEGURANÇA DE COMPUTADORES E CRIPTOGRAFIA','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('SEGURANÇA DE COMPUTADORES E CRIPTOGRAFIA','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('INTRODUÇÃO A SISTEMAS DE CONTROLE','Manhã','Terça','09:30','11:30',NOW(),NOW()),
+('INTRODUÇÃO A SISTEMAS DE CONTROLE','Manhã','Quinta','09:30','11:30',NOW(),NOW()),
+('INTRODUÇÃO A ELETRÔNICA','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('INTRODUÇÃO A ELETRÔNICA','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('INTRODUÇÃO A ELETRÔNICA','Tarde','Segunda','13:30','15:30',NOW(),NOW()),
+('INTRODUÇÃO A ELETRÔNICA','Manhã','Quinta','07:30','09:30',NOW(),NOW()),
+('MI - PROJETO DE CIRCUITOS DIGITAIS','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('MI - PROJETO DE CIRCUITOS DIGITAIS','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('MI - PROJETO DE CIRCUITOS DIGITAIS','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('MI - PROJETO DE CIRCUITOS DIGITAIS','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('MI - PROJETO DE CIRCUITOS DIGITAIS','Tarde','Segunda','13:30','15:30',NOW(),NOW()),
+('MI - SISTEMAS DIGITAIS','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('MI - SISTEMAS DIGITAIS','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('MI - SISTEMAS DIGITAIS','Tarde','Quarta','15:30','17:30',NOW(),NOW()),
+('MI - SISTEMAS DIGITAIS','Tarde','Sexta','15:30','17:30',NOW(),NOW()),
+('ELETRÔNICA PARA PROCESSAMENTO DIGITAL DE SINAIS','Tarde','Sexta','15:30','17:30',NOW(),NOW()),
+('MI - CONCORRÊNCIA E CONECTIVIDADE','Tarde','Terça','15:30','17:30',NOW(),NOW()),
+('MI - CONCORRÊNCIA E CONECTIVIDADE','Tarde','Quinta','15:30','17:30',NOW(),NOW()),
+('PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS','Manhã','Terça','07:30','09:30',NOW(),NOW()),
+('PRODUÇÃO DE TEXTOS TÉCNICOS E ACADÊMICOS','Tarde','Sexta','15:30','17:30',NOW(),NOW()),
+('MI - PROJETOS DE CIRCUITOS ELETRÔNICOS','Tarde','Segunda','15:30','17:30',NOW(),NOW()),
+('SISTEMAS DISTRIBUÍDOS AVANÇADOS','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('SISTEMAS DISTRIBUÍDOS AVANÇADOS','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('COMPUTAÇÃO DE ALTO DESEMPENHO','Manhã','Quarta','09:30','11:30',NOW(),NOW()),
+('COMPUTAÇÃO DE ALTO DESEMPENHO','Manhã','Sexta','09:30','11:30',NOW(),NOW()),
+('MI - PROCESSAMENTO DIGITAL DE SINAIS','Tarde','Quarta','13:30','15:30',NOW(),NOW()),
+('MI - PROCESSAMENTO DIGITAL DE SINAIS','Tarde','Sexta','13:30','15:30',NOW(),NOW()),
+('METODOLOGIA DA PESQUISA E DESENVOLVIMENTO EM ENGENHARIA DE COMPUTAÇÃO','Manhã','Quinta','07:30','09:30',NOW(),NOW()),
+('TRABALHO DE CONCLUSÃO DE CURSO I','Manhã','Sábado','09:30','11:30',NOW(),NOW()),
+('TRABALHO DE CONCLUSÃO DE CURSO II','Manhã','Sábado','09:30','11:30',NOW(),NOW()),
+('FÍSICA I','Manhã','Terça','07:30','09:30',NOW(),NOW()),
+('FÍSICA I','Manhã','Quinta','07:30','09:30',NOW(),NOW());
 
-INSERT INTO "Matriculas" ("alunoId", "turmaId", status, "createdAt", "updatedAt") VALUES
-(1,1,'Ativa',NOW(),NOW()),
-(2,3,'Ativa',NOW(),NOW()),
-(3,4,'Ativa',NOW(),NOW());
+
+ALTER TABLE "Disciplinas" ADD COLUMN IF NOT EXISTS "prerequisitoTexto" TEXT DEFAULT '';
+ALTER TABLE "Disciplinas" ADD COLUMN IF NOT EXISTS "correquisitoTexto" TEXT DEFAULT '';
+
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'BIO606';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CHF400';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CHF510';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS107';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS186';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS199';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS248';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS301';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS381';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS382';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS385';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS392';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS425';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'CIS457';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EDU113';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EDU311';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA085';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA417';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA543';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA863 - MI Programação; EXA805 - Algoritmos e Programação II', "correquisitoTexto" = 'EXA611 - MI Processadores de Linguagem de Programação' WHERE codigo = 'EXA544';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = '40% da carga horária total do curso', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA612';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA863 - MI Programação; EXA805 - Algoritmos e Programação II', "correquisitoTexto" = 'EXA809 - Engenharia de Software; EXA810 - Banco de Dados' WHERE codigo = 'EXA613';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA614';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA615';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = '60% da carga horária em MI, MO e DO', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA616';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA809 - Engenharia de Software; EXA613 - MI Engenharia de Software', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA620';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = '20% da carga horária total do curso', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA622';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA801 - Algoritmos e Programação I', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA623';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA702';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA703';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA543 - Introdução ao Cálculo', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA704';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA704 - Cálculo Diferencial e Integral I E', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA705';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA705 - Cálculo Diferencial e Integral II E', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA706';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA704 - Cálculo Diferencial e Integral I E', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA709';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'EXA854 - MI Algoritmos' WHERE codigo = 'EXA801';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA802';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA806 - Estrutura de Dados', "correquisitoTexto" = 'EXA863 - MI Programação; EXA807 - Estruturas Discretas' WHERE codigo = 'EXA805';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA854 - MI Algoritmos; EXA801 - Algoritmos e Programação I', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA806';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA806 - Estrutura de Dados', "correquisitoTexto" = 'EXA863 - MI Programação; EXA805 - Algoritmos e Programação II' WHERE codigo = 'EXA807';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA863 - MI Programação; EXA805 - Algoritmos e Programação II', "correquisitoTexto" = 'EXA613 - MI Engenharia de Software; EXA810 - Banco de Dados' WHERE codigo = 'EXA809';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA863 - MI Programação; EXA805 - Algoritmos e Programação II', "correquisitoTexto" = 'EXA613 - MI Engenharia de Software; EXA809 - Engenharia de Software' WHERE codigo = 'EXA810';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA705 - Cálculo Diferencial e Integral II E; EXA807 - Estruturas Discretas', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA813';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = '40% da carga horária total do curso', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA828';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'EXA801 - Algoritmos e Programação I' WHERE codigo = 'EXA854';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA861';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA806 - Estrutura de Dados; TEC503 - Produção de Textos Técnicos e Acadêmicos', "correquisitoTexto" = 'EXA805 - Algoritmos e Programação II; EXA807 - Estruturas Discretas' WHERE codigo = 'EXA863';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA809 - Engenharia de Software; EXA613 - MI Engenharia de Software', "correquisitoTexto" = 'Não tem' WHERE codigo = 'EXA871';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA704 - Cálculo Diferencial e Integral I E', "correquisitoTexto" = 'Não tem' WHERE codigo = 'FIS155';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'FIS156';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA702 - Álgebra Vetorial e Geometria Analítica; EXA705 - Cálculo Diferencial e Integral II E', "correquisitoTexto" = 'Não tem' WHERE codigo = 'FIS160';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'FIS161';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'LET808';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC167';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA703 - Álgebra Linear I E; EXA706 - Equações Diferenciais I-E', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC217';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC497 - Introdução à Eletrônica; EXA706 - Equações Diferenciais I-E; FIS160 - Física III', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC218';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA706 - Equações Diferenciais I-E; FIS160 - Física III; TEC497 - Introdução à Eletrônica; TEC218 - Circuitos Elétricos', "correquisitoTexto" = 'TEC506 - MI Projeto de Circuitos Eletrônicos' WHERE codigo = 'TEC219';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA702 - Álgebra Vetorial e Geometria Analítica; TEC217 - Métodos Computacionais', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC220';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC221';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC518 - Trabalho de Conclusão de Curso I', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC222';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = '20% da carga horária total do curso', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC224';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC497 - Introdução à Eletrônica', "correquisitoTexto" = 'TEC498 - MI Projeto de Circuitos Digitais' WHERE codigo = 'TEC401';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC401 - Circuitos Digitais; TEC498 - MI Projeto de Circuitos Digitais', "correquisitoTexto" = 'TEC499 - MI Sistemas Digitais' WHERE codigo = 'TEC402';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA863 - MI Programação; EXA805 - Algoritmos e Programação II', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC408';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC408 - Sistemas Operacionais', "correquisitoTexto" = 'TEC502 - MI Concorrência e Conectividade' WHERE codigo = 'TEC409';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC217 - Métodos Computacionais', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC412';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC401 - Circuitos Digitais; TEC412 - Sinais e Sistemas', "correquisitoTexto" = 'TEC513 - MI Processamento Digital de Sinais; TEC501 - Eletrônica para Processamento Digital de Sinais' WHERE codigo = 'TEC430';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA805 - Algoritmos e Programação II', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC433';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA705 - Cálculo Diferencial e Integral II E; EXA806 - Estrutura de Dados', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC434';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA709 - Probabilidade e Estatística I-E; EXA807 - Estruturas Discretas; EXA806 - Estrutura de Dados', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC451';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA703 - Álgebra Linear I E; EXA706 - Equações Diferenciais I-E; FIS155 - Física I; EXA807 - Estruturas Discretas', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC467';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC497';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC497 - Introdução à Eletrônica; TEC503 - Produção de Textos Técnicos e Acadêmicos', "correquisitoTexto" = 'TEC401 - Circuitos Digitais' WHERE codigo = 'TEC498';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC498 - MI Projeto de Circuitos Digitais; TEC401 - Circuitos Digitais', "correquisitoTexto" = 'TEC402 - Arquitetura de Computadores' WHERE codigo = 'TEC499';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC219 - Eletrônica Geral', "correquisitoTexto" = 'TEC513 - MI Processamento Digital de Sinais; TEC430 - Processamento Digital de Sinais' WHERE codigo = 'TEC501';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC408 - Sistemas Operacionais', "correquisitoTexto" = 'TEC409 - Redes de Computadores' WHERE codigo = 'TEC502';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'Não tem', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC503';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'EXA706 - Equações Diferenciais I-E; FIS160 - Física III; TEC497 - Introdução à Eletrônica; TEC218 - Circuitos Elétricos', "correquisitoTexto" = 'TEC219 - Eletrônica Geral' WHERE codigo = 'TEC506';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC409 - Redes de Computadores; TEC502 - MI Concorrência e Conectividade', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC507';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC409 - Redes de Computadores; TEC502 - MI Concorrência e Conectividade', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC508';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC401 - Circuitos Digitais; TEC412 - Sinais e Sistemas', "correquisitoTexto" = 'TEC430 - Processamento Digital de Sinais; TEC501 - Eletrônica para Processamento Digital de Sinais' WHERE codigo = 'TEC513';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = '70% da carga horária em MI, MO e DO', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC517';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC517 - Metodologia da Pesquisa e Desenvolvimento em Engenharia de Computação', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC518';
+UPDATE "Disciplinas" SET "prerequisitoTexto" = 'TEC518 - Trabalho de Conclusão de Curso I', "correquisitoTexto" = 'Não tem' WHERE codigo = 'TEC519';

@@ -2,14 +2,14 @@
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
-    <title>404</title>
+    <title><%= typeof title !== 'undefined' ? title : 'Página não encontrada' %></title>
     <link rel="stylesheet" href="/css/dashboard.css" />
   </head>
   <body>
     <div class="not-found">
-      <h1>404</h1>
-      <p>Página não encontrada.</p>
-      <a href="/">Voltar</a>
+      <h1><%= typeof title !== 'undefined' ? title : '404' %></h1>
+      <p><%= typeof message !== 'undefined' ? message : 'Página não encontrada.' %></p>
+      <a href="/">Voltar para o login</a>
     </div>
   </body>
 </html>

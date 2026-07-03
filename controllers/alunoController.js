@@ -3,8 +3,15 @@ const Turma = require("../models/Turma");
 const Matricula = require("../models/Matricula");
 const Progresso = require("../models/Progresso");
 
-const ALUNO_ID = 1;
 const CARGA_MAXIMA = 28;
+
+function getAlunoId(req) {
+  return req.user?.id || 1;
+}
+
+function getAlunoView(req) {
+  return { nome: req.user?.nome || "Aluno", email: req.user?.email || "" };
+}
 
 function redirectWithMsg(path, tipo, texto) {
   return `${path}?${tipo}=${encodeURIComponent(texto)}`;
@@ -48,9 +55,9 @@ function turmasConflitam(a, b) {
   return ia.inicio < ib.fim && ib.inicio < ia.fim;
 }
 
-async function buscarMatriculasAtivas() {
+async function buscarMatriculasAtivas(alunoId) {
   const matriculas = await Matricula.findAll({
-    where: { alunoId: ALUNO_ID, status: "ATIVA" },
+    where: { alunoId, status: "ATIVA" },
     order: [["id", "DESC"]],
     raw: true,
   });
@@ -66,19 +73,19 @@ async function buscarMatriculasAtivas() {
 exports.vitrine = async (req, res) => {
   const disciplinas = await Disciplina.findAll({ order: [["nome", "ASC"]] });
   const turmas = await Turma.findAll({ where: { ativa: true }, order: [["id", "DESC"]] });
-  res.render("aluno/vitrine", { aluno: { nome: "Aluno" }, disciplinas, turmas });
+  res.render("aluno/vitrine", { aluno: getAlunoView(req), disciplinas, turmas });
 };
 
 exports.cronograma = async (req, res) => {
-  const matriculas = await buscarMatriculasAtivas();
+  const matriculas = await buscarMatriculasAtivas(getAlunoId(req));
   const turmas = matriculas.map((m) => m.turma);
   const cargaSemanal = turmas.reduce((soma, turma) => soma + calcularCargaSemanal(turma), 0);
-  res.render("aluno/cronograma", { aluno: { nome: "Aluno" }, turmas, cargaSemanal });
+  res.render("aluno/cronograma", { aluno: getAlunoView(req), turmas, cargaSemanal });
 };
 
 exports.matriculas = async (req, res) => {
   const ofertas = await Turma.findAll({ where: { ativa: true }, order: [["disciplina", "ASC"]] });
-  const matriculas = await buscarMatriculasAtivas();
+  const matriculas = await buscarMatriculasAtivas(getAlunoId(req));
   const turmasMatriculadas = matriculas.map((m) => m.turma);
   const idsMatriculados = turmasMatriculadas.map((t) => t.id);
   const cargaAtual = turmasMatriculadas.reduce(
@@ -103,7 +110,7 @@ exports.matriculas = async (req, res) => {
     let prerequisitoTexto = "-";
     if (disciplina && disciplina.prerequisitoId) {
       const progressoPre = await Progresso.findOne({
-        where: { alunoId: ALUNO_ID, disciplinaId: disciplina.prerequisitoId, status: "CONCLUIDA" },
+        where: { alunoId: getAlunoId(req), disciplinaId: disciplina.prerequisitoId, status: "CONCLUIDA" },
       });
       prerequisitoOk = Boolean(progressoPre);
       prerequisitoTexto = disciplina.prerequisito
@@ -126,7 +133,7 @@ exports.matriculas = async (req, res) => {
   }
 
   res.render("aluno/matriculas", {
-    aluno: { nome: "Aluno" },
+    aluno: getAlunoView(req),
     turmas,
     matriculas,
     cargaAtual,
@@ -144,14 +151,14 @@ exports.adicionarMatricula = async (req, res) => {
     return res.redirect(redirectWithMsg("/aluno/matriculas", "erro", "Turma indisponível."));
 
   const jaExiste = await Matricula.findOne({
-    where: { alunoId: ALUNO_ID, turmaId, status: "ATIVA" },
+    where: { alunoId: getAlunoId(req), turmaId, status: "ATIVA" },
   });
   if (jaExiste)
     return res.redirect(
       redirectWithMsg("/aluno/matriculas", "erro", "Você já adicionou essa turma.")
     );
 
-  const matriculas = await buscarMatriculasAtivas();
+  const matriculas = await buscarMatriculasAtivas(getAlunoId(req));
   const turmasMatriculadas = matriculas.map((m) => m.turma);
   const turmaJson = turma.toJSON();
 
@@ -185,7 +192,7 @@ exports.adicionarMatricula = async (req, res) => {
 
   if (disciplina && disciplina.prerequisitoId) {
     const progressoPre = await Progresso.findOne({
-      where: { alunoId: ALUNO_ID, disciplinaId: disciplina.prerequisitoId, status: "CONCLUIDA" },
+      where: { alunoId: getAlunoId(req), disciplinaId: disciplina.prerequisitoId, status: "CONCLUIDA" },
     });
     if (!progressoPre) {
       return res.redirect(
@@ -198,7 +205,7 @@ exports.adicionarMatricula = async (req, res) => {
     }
   }
 
-  await Matricula.create({ alunoId: ALUNO_ID, turmaId, status: "ATIVA" });
+  await Matricula.create({ alunoId: getAlunoId(req), turmaId, status: "ATIVA" });
   await Turma.update({ vagasOcupadas: vagasOcupadas + 1 }, { where: { id: turmaId } });
 
   return res.redirect(
@@ -208,7 +215,7 @@ exports.adicionarMatricula = async (req, res) => {
 
 exports.removerMatricula = async (req, res) => {
   const matricula = await Matricula.findOne({
-    where: { id: req.params.id, alunoId: ALUNO_ID, status: "ATIVA" },
+    where: { id: req.params.id, alunoId: getAlunoId(req), status: "ATIVA" },
   });
 
   if (!matricula)
@@ -238,7 +245,7 @@ exports.fluxograma = async (req, res) => {
     ],
   });
 
-  const progressos = await Progresso.findAll({ where: { alunoId: ALUNO_ID }, raw: true });
+  const progressos = await Progresso.findAll({ where: { alunoId: getAlunoId(req) }, raw: true });
   const progressoMap = {};
   progressos.forEach((p) => {
     progressoMap[p.disciplinaId] = p.status;
@@ -253,7 +260,7 @@ exports.fluxograma = async (req, res) => {
   });
 
   res.render("aluno/fluxograma", {
-    aluno: { nome: "Aluno" },
+    aluno: getAlunoView(req),
     disciplinas: disciplinasFormatadas,
     resumo: {
       total: disciplinasFormatadas.length,
@@ -266,13 +273,59 @@ exports.fluxograma = async (req, res) => {
 
 exports.atualizarStatus = async (req, res) => {
   const { disciplinaId, status } = req.body;
-  const registro = await Progresso.findOne({ where: { alunoId: ALUNO_ID, disciplinaId } });
+  const registro = await Progresso.findOne({ where: { alunoId: getAlunoId(req), disciplinaId } });
 
   if (registro) await registro.update({ status });
-  else await Progresso.create({ alunoId: ALUNO_ID, disciplinaId, status });
+  else await Progresso.create({ alunoId: getAlunoId(req), disciplinaId, status });
 
   res.redirect("/aluno/fluxograma");
 };
 
-exports.grades = (req, res) => res.render("aluno/grades");
-exports.financeiro = (req, res) => res.render("aluno/financeiro");
+
+exports.grades = async (req, res) => {
+  const matriculas = await buscarMatriculasAtivas(getAlunoId(req));
+  const turmas = matriculas.map((m) => m.turma);
+  const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const horarios = ["07:30 - 09:10", "09:20 - 11:00", "13:30 - 15:10", "15:20 - 17:00", "18:30 - 20:10", "20:20 - 22:00"];
+  const cargaSemanal = turmas.reduce((soma, turma) => soma + calcularCargaSemanal(turma), 0);
+  const horarios = [
+    "07:30 - 09:30",
+    "09:30 - 11:30",
+    "11:30 - 12:30",
+    "13:30 - 15:30",
+    "15:30 - 17:30",
+    "17:30 - 18:30",
+    "19:00 - 21:00",
+    "21:00 - 23:00",
+  ];
+
+  res.render("aluno/grades", {
+    aluno: getAlunoView(req),
+    turmas,
+    dias,
+    horarios,
+    cargaSemanal,
+    totalTurmas: turmas.length,
+  });
+};
+
+exports.financeiro = async (req, res) => {
+  const matriculas = await buscarMatriculasAtivas(getAlunoId(req));
+  const qtd = matriculas.length;
+  const mensalidadeBase = 0;
+  const custos = [
+    { item: "Matrícula acadêmica", valor: mensalidadeBase, status: "Isento" },
+    { item: "Materiais e impressões", valor: qtd * 18, status: "Previsto" },
+    { item: "Transporte estimado", valor: qtd * 40, status: "Previsto" },
+    { item: "Alimentação estimada", valor: qtd * 30, status: "Previsto" },
+  ];
+  const total = custos.reduce((soma, c) => soma + c.valor, 0);
+
+  res.render("aluno/financeiro", {
+    aluno: getAlunoView(req),
+    custos,
+    total,
+    qtdTurmas: qtd,
+  });
+};
+

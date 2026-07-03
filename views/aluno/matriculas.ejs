@@ -7,21 +7,7 @@
   </head>
   <body>
     <div class="container">
-      <aside class="sidebar">
-        <div class="logo">Horários</div>
-        <nav class="menu">
-          <a href="/aluno/vitrine">Vitrine</a>
-          <a href="/aluno/cronograma">Meu Semestre</a>
-          <a href="/aluno/grades">Grades</a>
-          <a class="active" href="/aluno/matriculas">Matrículas</a>
-          <a href="/aluno/financeiro">Financeiro</a>
-          <a href="/aluno/fluxograma">Fluxograma</a>
-        </nav>
-        <div class="sidebar-user">
-          <strong><%= aluno ? aluno.nome : "Aluno" %></strong>
-          <span>Engenharia de Computação</span>
-        </div>
-      </aside>
+      <%- include('../partials/aluno-sidebar') %>
       <main class="content">
         <header class="topbar">
           <div>
@@ -29,7 +15,7 @@
             <p>Escolha matérias disponíveis e monte sua carga horária semanal.</p>
           </div>
           <select>
-            <option>2026.1</option>
+            <option>2026.2</option>
           </select>
         </header>
         <% if (erro) { %>
@@ -77,46 +63,50 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <% if (!turmas || turmas.length === 0) { %>
-                  <tr><td colspan="8">Nenhuma turma disponível.</td></tr>
-                  <% } else { %><% turmas.forEach(turma => { %>
-                  <tr>
-                    <td>
-                      <span
-                        class="color-dot"
-                        style="background-color: <%= turma.cor || &quot;#2563eb&quot; %>"
-                      ></span>
-                      <strong><%= turma.disciplina || turma.nome %></strong>
-                      <br />
-                      <small>
-                        Carga: <%= turma.cargaTurma %>h | Pré: <%= turma.prerequisitoTexto %>
-                      </small>
-                    </td>
-                    <td><%= turma.professor || "-" %></td>
-                    <td><%= turma.dias || "-" %></td>
-                    <td><%= turma.horario || "-" %></td>
-                    <td><%= turma.sala || "-" %></td>
-                    <td><%= turma.vagasOcupadas || 0 %>/<%= turma.vagas || 0 %></td>
-                    <td>
-                      <% if (turma.podeAdicionar) { %>
-                      <span class="badge active">Liberada</span>
-                      <% } else { %>
-                      <span class="badge inactive"><%= turma.bloqueio %></span>
-                      <% } %>
-                    </td>
-                    <td>
-                      <% if (turma.podeAdicionar) { %>
-                      <form action="/aluno/matriculas/adicionar" method="POST">
-                        <input type="hidden" name="turmaId" value="<%= turma.id %>" />
-                        <button class="btn-edit" type="submit">Adicionar</button>
-                      </form>
-                      <% } else { %>
-                      <button class="btn-delete" type="button" disabled>Bloqueada</button>
-                      <% } %>
-                    </td>
-                  </tr>
-                  <% }) %><% } %>
-                </tbody>
+  <% if (!turmas || turmas.length === 0) { %>
+    <tr>
+      <td colspan="8">Nenhuma turma disponível.</td>
+    </tr>
+  <% } else { %>
+    <% turmas.forEach(turma => { %>
+      <tr>
+        <td>
+          <span class="color-dot"></span>
+          <strong><%= turma.disciplina || turma.nome %></strong>
+          <br />
+          <small>
+            Carga: <%= turma.cargaTurma %>h | Pré: <%= turma.prerequisitoTexto %>
+          </small>
+        </td>
+
+        <td><%= turma.professor || "-" %></td>
+        <td><%= turma.dias || "-" %></td>
+        <td><%= turma.horario || "-" %></td>
+        <td><%= turma.sala || "-" %></td>
+        <td><%= turma.vagasOcupadas || 0 %>/<%= turma.vagas || 0 %></td>
+
+        <td>
+          <% if (turma.podeAdicionar) { %>
+            <span class="badge active">Liberada</span>
+          <% } else { %>
+            <span class="badge inactive"><%= turma.bloqueio %></span>
+          <% } %>
+        </td>
+
+        <td>
+          <% if (turma.podeAdicionar) { %>
+            <form action="/aluno/matriculas/adicionar" method="POST">
+              <input type="hidden" name="turmaId" value="<%= turma.id %>" />
+              <button class="btn-edit" type="submit">Adicionar</button>
+            </form>
+          <% } else { %>
+            <button class="btn-delete" type="button" disabled>Bloqueada</button>
+          <% } %>
+        </td>
+      </tr>
+    <% }) %>
+  <% } %>
+</tbody>
               </table>
             </div>
           </div>

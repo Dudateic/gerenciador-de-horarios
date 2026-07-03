@@ -53,11 +53,11 @@
                     </span>
                   </td>
                   <td class="actions">
-                    <a class="btn-edit" href="/admin/relatorios/turmas/<%= turma.id %>/editar">
+                    <a class="btn-edit" href="/admin/turmas/<%= turma.id %>/editar?origem=relatorios">
                       Editar
                     </a>
                     <form
-                      action="/admin/relatorios/turmas/<%= turma.id %>/excluir"
+                      action="/admin/turmas/<%= turma.id %>/excluir"
                       method="POST"
                       onsubmit="return confirm('Excluir esta turma?');"
                     >

@@ -6,23 +6,59 @@
     <title>Login | Horários</title>
     <link rel="stylesheet" href="/css/login.css" />
   </head>
+
   <body>
     <main class="login-container">
       <section class="login-card">
         <h1>Bem-vindo!</h1>
-        <p>Selecione seu perfil para acessar o sistema de horários.</p>
-        <% if (erro) { %>
-        <div class="login-error"><%= erro %></div>
+        <p>Entre com seu e-mail e senha.</p>
+
+        <% if (typeof erro !== 'undefined' && erro) { %>
+          <div class="login-error"><%= erro %></div>
         <% } %>
+
+        <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+          <div class="login-success"><%= sucesso %></div>
+        <% } %>
+
         <form action="/login" method="POST">
-          <label for="perfil">Perfil</label>
-          <select id="perfil" name="perfil" required>
-            <option value="">Selecione seu perfil</option>
-            <option value="admin">Administrador</option>
-            <option value="aluno">Aluno</option>
-          </select>
+
+          <label for="email">E-mail</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="seuemail@exemplo.com"
+            required
+          />
+
+          <label for="senha">Senha</label>
+          <input
+            id="senha"
+            name="senha"
+            type="password"
+            placeholder="Digite sua senha"
+            required
+          />
+
           <button type="submit">Entrar</button>
+
         </form>
+
+        <div class="login-links">
+
+          <a href="/recuperar-senha">
+            Esqueceu sua senha?
+          </a>
+
+          <span>•</span>
+
+          <a href="/cadastro">
+            Criar uma conta
+          </a>
+
+        </div>
+
       </section>
     </main>
   </body>

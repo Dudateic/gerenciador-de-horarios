@@ -1,2 +1,58 @@
-<h1>Financeiro</h1>
-<p>Tela financeira em desenvolvimento.</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Financeiro</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
+<body>
+<div class="container">
+  <%- include('../partials/aluno-sidebar') %>
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <h1>Financeiro</h1>
+        <p>Estimativa simples de custos relacionados ao semestre.</p>
+      </div>
+      <select><option>2026.1</option></select>
+    </header>
+
+    <section class="cards">
+      <div class="card"><span>Total estimado</span><strong>R$ <%= total.toFixed(2).replace('.', ',') %></strong><small>previsão mensal</small></div>
+      <div class="card"><span>Turmas</span><strong><%= qtdTurmas %></strong><small>matriculadas</small></div>
+      <div class="card"><span>Mensalidade</span><strong>R$ 0</strong><small>universidade pública</small></div>
+      <div class="card"><span>Status</span><strong>Ok</strong><small>sem pendências</small></div>
+    </section>
+
+    <section class="grid">
+      <div class="panel">
+        <h3>Previsão de custos</h3>
+        <div class="table-wrapper">
+          <table class="table">
+            <thead><tr><th>Item</th><th>Status</th><th>Valor</th></tr></thead>
+            <tbody>
+              <% custos.forEach(custo => { %>
+              <tr>
+                <td><strong><%= custo.item %></strong></td>
+                <td><span class="badge active"><%= custo.status %></span></td>
+                <td>R$ <%= custo.valor.toFixed(2).replace('.', ',') %></td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Resumo</h3>
+        <div class="summary">
+          <div class="summary-row"><span>Semestre</span><strong>2026.1</strong></div>
+          <div class="summary-row"><span>Disciplinas adicionadas</span><strong><%= qtdTurmas %></strong></div>
+          <div class="summary-row"><span>Previsão mensal</span><strong>R$ <%= total.toFixed(2).replace('.', ',') %></strong></div>
+          <div class="summary-row"><span>Observação</span><strong>Valores editáveis futuramente</strong></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar Senha | Horários</title>
+    <link rel="stylesheet" href="/css/login.css" />
+  </head>
+
+  <body>
+    <main class="login-container">
+      <section class="login-card">
+
+        <h1>Esqueceu sua senha?</h1>
+
+        <p>
+          Informe o e-mail cadastrado para receber o link de redefinição da senha.
+        </p>
+
+        <% if (typeof erro !== 'undefined' && erro) { %>
+          <div class="login-error">
+            <%= erro %>
+          </div>
+        <% } %>
+
+        <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+          <div class="login-success">
+            <%= sucesso %>
+          </div>
+        <% } %>
+
+        <form action="/recuperar-senha" method="POST">
+
+          <label for="email">E-mail</label>
+
+          <input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="seuemail@exemplo.com"
+            required
+          >
+
+          <button type="submit">
+            Enviar link de recuperação
+          </button>
+
+        </form>
+
+        <% if (typeof resetLink !== 'undefined' && resetLink) { %>
+
+          <div class="login-success" style="margin-top:20px">
+
+            <strong>Modo de desenvolvimento</strong>
+
+            <p style="margin-top:8px">
+              Como o envio de e-mails ainda não está configurado, utilize o botão
+              abaixo para redefinir sua senha.
+            </p>
+
+            <a class="reset-box" href="<%= resetLink %>">
+              Redefinir senha
+            </a>
+
+          </div>
+
+        <% } %>
+
+        <div class="login-links">
+
+          <span>Lembrou sua senha?</span>
+
+          <a href="/">
+            Voltar ao login
+          </a>
+
+        </div>
+
+      </section>
+    </main>
+  </body>
+</html>

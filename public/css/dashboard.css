@@ -541,3 +541,69 @@ body {
   margin-right: 8px;
   vertical-align: middle;
 }
+.schedule-table th,
+.schedule-table td {
+  min-width: 150px;
+}
+.mini-class {
+  background: #f8fafc;
+  border-left: 4px solid #2563eb;
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+}
+.mini-class strong {
+  display: block;
+  font-size: 12px;
+  color: #0f172a;
+}
+.mini-class span {
+  font-size: 11px;
+  color: #64748b;
+}
+.sidebar-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 18px;
+}
+.sidebar-actions a,
+.sidebar-actions button {
+  width: 100%;
+  border: none;
+  border-radius: 12px;
+  padding: 11px 12px;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.sidebar-actions a {
+  background: #eff6ff;
+  color: #2563eb;
+}
+.sidebar-actions button {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.sidebar-actions form {
+  display: block;
+}
+.alert {
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-weight: 700;
+  font-size: 14px;
+}
+.alert.error {
+  background: #fee2e2;
+  color: #991b1b;
+}
+.alert.success {
+  background: #dcfce7;
+  color: #166534;
+}
+
+

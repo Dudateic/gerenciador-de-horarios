@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Editar Disciplina</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+  <link rel="stylesheet" href="/css/form.css" />
+</head>
+<body>
+<div class="container">
+  <%- include('../partials/sidebar') %>
+
+  <main class="content form-page">
+    <section class="form-card">
+      <div class="form-header">
+        <div>
+          <h2>Editar Disciplina</h2>
+          <p>Atualize os dados da disciplina selecionada.</p>
+        </div>
+        <a class="close" href="/admin/disciplinas-turmas">×</a>
+      </div>
+
+      <%- include('../partials/messages') %>
+
+      <form action="/admin/disciplinas/<%= disciplina.id %>/editar" method="POST">
+        <label for="nome">Nome da Disciplina</label>
+        <input
+          id="nome"
+          type="text"
+          name="nome"
+          value="<%= disciplina.nome %>"
+          required
+          minlength="3"
+        />
+
+        <div class="form-grid">
+          <div>
+            <label for="codigo">Código</label>
+            <input
+              id="codigo"
+              type="text"
+              name="codigo"
+              value="<%= disciplina.codigo %>"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="semestre">Semestre</label>
+            <input
+              id="semestre"
+              type="text"
+              name="semestre"
+              value="<%= disciplina.semestre %>"
+              placeholder="Ex.: 1 ou 2026.2"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div>
+            <label for="cargaHoraria">Carga Horária</label>
+            <input
+              id="cargaHoraria"
+              type="number"
+              name="cargaHoraria"
+              min="1"
+              value="<%= disciplina.cargaHoraria || 60 %>"
+            />
+          </div>
+
+          <div>
+            <label for="coordenador">Coordenador</label>
+            <input
+              id="coordenador"
+              type="text"
+              name="coordenador"
+              value="<%= disciplina.coordenador || '' %>"
+              placeholder="Nome do coordenador"
+            />
+          </div>
+        </div>
+
+        <label for="prerequisitoId">Pré-requisito</label>
+        <select id="prerequisitoId" name="prerequisitoId">
+          <option value="">Nenhum</option>
+          <% disciplinas.forEach(d => { %>
+            <option
+              value="<%= d.id %>"
+              <%= Number(disciplina.prerequisitoId) === Number(d.id) ? 'selected' : '' %>
+            >
+              <%= d.nome %> - <%= d.codigo %>
+            </option>
+          <% }) %>
+        </select>
+
+        <label for="correquisitoId">Correquisito</label>
+        <select id="correquisitoId" name="correquisitoId">
+          <option value="">Nenhum</option>
+          <% disciplinas.forEach(d => { %>
+            <option
+              value="<%= d.id %>"
+              <%= Number(disciplina.correquisitoId) === Number(d.id) ? 'selected' : '' %>
+            >
+              <%= d.nome %> - <%= d.codigo %>
+            </option>
+          <% }) %>
+        </select>
+
+        <div class="form-actions">
+          <a class="btn-cancel" href="/admin/disciplinas-turmas">Cancelar</a>
+          <button type="submit">Salvar Alterações</button>
+        </div>
+      </form>
+    </section>
+  </main>
+</div>
+</body>
+</html>

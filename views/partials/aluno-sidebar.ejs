@@ -1,0 +1,21 @@
+<aside class="sidebar">
+  <div class="logo">Horários</div>
+  <nav class="menu">
+    <a class="<%= currentPath === '/aluno/vitrine' ? 'active' : '' %>" href="/aluno/vitrine">Vitrine</a>
+    <a class="<%= currentPath === '/aluno/cronograma' ? 'active' : '' %>" href="/aluno/cronograma">Meu Semestre</a>
+    <a class="<%= currentPath === '/aluno/grades' ? 'active' : '' %>" href="/aluno/grades">Grades</a>
+    <a class="<%= currentPath === '/aluno/matriculas' ? 'active' : '' %>" href="/aluno/matriculas">Matrículas</a>
+    <a class="<%= currentPath === '/aluno/financeiro' ? 'active' : '' %>" href="/aluno/financeiro">Financeiro</a>
+    <a class="<%= currentPath === '/aluno/fluxograma' ? 'active' : '' %>" href="/aluno/fluxograma">Fluxograma</a>
+  </nav>
+  <div class="sidebar-user">
+    <strong><%= typeof aluno !== 'undefined' && aluno ? aluno.nome : 'Aluno' %></strong>
+    <span>Engenharia de Computação</span>
+    <div class="sidebar-actions">
+      <a href="/aluno/vitrine">Voltar ao início</a>
+      <form action="/logout" method="POST">
+        <button type="submit">Sair do aluno</button>
+      </form>
+    </div>
+  </div>
+</aside>

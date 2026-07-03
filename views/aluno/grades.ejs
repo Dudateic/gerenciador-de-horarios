@@ -1,2 +1,182 @@
-<h1>Grades</h1>
-<p>Tela de grades em desenvolvimento.</p>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grades</title>
+  <link rel="stylesheet" href="/css/dashboard.css" />
+</head>
+
+<body>
+<div class="container">
+  <%- include('../partials/aluno-sidebar') %>
+
+  <main class="content">
+    <header class="topbar">
+      <div>
+        <h1>Minha Grade de Horários</h1>
+        <p>Visualize suas disciplinas organizadas por dia e horário.</p>
+      </div>
+
+    </header>
+
+    <section class="cards">
+      <div class="card">
+        <span>Turmas selecionadas</span>
+        <strong><%= totalTurmas %></strong>
+        <small>na grade atual</small>
+      </div>
+
+      <div class="card">
+        <span>Carga semanal</span>
+        <strong><%= cargaSemanal %>h</strong>
+        <small>estimada</small>
+      </div>
+
+      <div class="card">
+        <span>Semestre</span>
+        <strong>2026.2</strong>
+        <small>período atual</small>
+      </div>
+
+      <div class="card">
+        <span>Status</span>
+        <strong>Ativa</strong>
+        <small>grade montada</small>
+      </div>
+    </section>
+
+    <%
+      function diaCombina(diasTurma, diaTabela) {
+        const mapa = {
+          "Seg": "Segunda",
+          "Ter": "Terça",
+          "Qua": "Quarta",
+          "Qui": "Quinta",
+          "Sex": "Sexta",
+          "Sáb": "Sábado"
+        };
+
+        const texto = String(diasTurma || "");
+
+        return texto.includes(diaTabela) || texto.includes(mapa[diaTabela]);
+      }
+
+      function paraMinutos(hora) {
+        const [h, m] = String(hora || "00:00").split(":").map(Number);
+        return (h || 0) * 60 + (m || 0);
+      }
+
+      function horariosConflitam(horarioTurma, faixaTabela) {
+        const horariosTurma = String(horarioTurma || "").split(",");
+
+        const faixaPartes = String(faixaTabela || "").split(" - ");
+        if (faixaPartes.length !== 2) return false;
+
+        const inicioFaixa = paraMinutos(faixaPartes[0]);
+        const fimFaixa = paraMinutos(faixaPartes[1]);
+
+        return horariosTurma.some((horario) => {
+          const partes = horario.trim().split(" - ");
+          if (partes.length !== 2) return false;
+
+          const inicioTurma = paraMinutos(partes[0]);
+          const fimTurma = paraMinutos(partes[1]);
+
+          return inicioTurma < fimFaixa && inicioFaixa < fimTurma;
+        });
+      }
+    %>
+
+    <section class="panel">
+      <h3>Quadro semanal</h3>
+
+      <div class="table-wrapper">
+        <table class="table schedule-table">
+          <thead>
+            <tr>
+              <th>Horário</th>
+
+              <% dias.forEach(dia => { %>
+                <th><%= dia %></th>
+              <% }) %>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% horarios.forEach(faixa => { %>
+              <tr>
+                <td>
+                  <strong><%= faixa %></strong>
+                </td>
+
+                <% dias.forEach(dia => {
+                  const aulas = turmas.filter(t =>
+                    diaCombina(t.dias, dia) &&
+                    horariosConflitam(t.horario, faixa)
+                  );
+                %>
+
+                  <td>
+                    <% if (aulas.length === 0) { %>
+                      <small>Livre</small>
+                    <% } else { %>
+                      <% aulas.forEach(turma => { %>
+                        <div class="mini-class">
+                          <strong>
+                            <%= turma.disciplina || turma.nome %>
+                          </strong>
+
+                          <span>
+                            <%= turma.sala || '-' %>
+                          </span>
+
+                          <small>
+                            <%= turma.horario || '-' %>
+                          </small>
+                        </div>
+                      <% }) %>
+                    <% } %>
+                  </td>
+
+                <% }) %>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel mt">
+      <h3>Disciplinas na grade</h3>
+
+      <div class="discipline-list">
+        <% if (!turmas || turmas.length === 0) { %>
+          <p>
+            Nenhuma disciplina adicionada. Vá em Matrículas para montar sua grade.
+          </p>
+        <% } else { %>
+          <% turmas.forEach(turma => { %>
+            <div class="discipline-card">
+              <div>
+                <strong>
+                  <%= turma.disciplina || turma.nome %>
+                </strong>
+
+                <span>
+                  <%= turma.professor || '-' %> •
+                  <%= turma.dias || '-' %> •
+                  <%= turma.horario || '-' %> •
+                  <%= turma.sala || '-' %>
+                </span>
+              </div>
+
+              <a href="/aluno/matriculas">›</a>
+            </div>
+          <% }) %>
+        <% } %>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

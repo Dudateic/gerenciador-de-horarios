@@ -1,4 +1,4 @@
-const { fn, col } = require("sequelize");
+const { fn, col, Op } = require("sequelize");
 const Aluno = require("../models/Aluno");
 const Professor = require("../models/Professor");
 const Turma = require("../models/Turma");
@@ -138,11 +138,11 @@ exports.estudantes = async (req, res) => {
     order: [["id", "DESC"]],
   });
 
-  res.render("admin/estudantes", { alunos });
+  res.render("admin/estudantes", { alunos, erro: req.query.erro, sucesso: req.query.sucesso });
 };
 
 exports.criarEstudante = async (req, res) => {
-  const { nome, matricula, email, semestre } = req.body;
+  const { nome, matricula, email, semestre, senha } = req.body;
   if (!nome || nome.trim().length < 3)
     return res.redirect(
       redirectWithMsg("/admin/estudantes", "erro", "Informe o nome do estudante.")
@@ -152,6 +152,7 @@ exports.criarEstudante = async (req, res) => {
     matricula: matricula || null,
     email: email || null,
     semestre,
+    senha: senha || matricula || "123456",
     curso: "Engenharia de Computação",
     ativo: true,
   });
@@ -168,7 +169,7 @@ exports.formEditarEstudante = async (req, res) => {
 };
 
 exports.editarEstudante = async (req, res) => {
-  const { nome, matricula, email, semestre, ativo } = req.body;
+  const { nome, matricula, email, semestre, senha, ativo } = req.body;
   if (!nome || nome.trim().length < 3)
     return res.redirect(
       redirectWithMsg(
@@ -178,7 +179,7 @@ exports.editarEstudante = async (req, res) => {
       )
     );
   await Aluno.update(
-    { nome, matricula: matricula || null, email: email || null, semestre, ativo: ativo === "on" },
+    { nome, matricula: matricula || null, email: email || null, semestre, senha: senha || undefined, ativo: ativo === "on" },
     { where: { id: req.params.id } }
   );
   res.redirect(redirectWithMsg("/admin/estudantes", "sucesso", "Estudante atualizado."));
@@ -189,7 +190,7 @@ exports.excluirEstudante = async (req, res) => {
     where: { id: req.params.id },
   });
 
-  res.redirect("/admin/estudantes");
+  res.redirect(redirectWithMsg("/admin/estudantes", "sucesso", "Estudante excluído."));
 };
 
 exports.disciplinasTurmas = async (req, res) => {
@@ -218,20 +219,30 @@ exports.disciplinasTurmas = async (req, res) => {
 };
 
 exports.criarDisciplina = async (req, res) => {
-  const { nome, codigo, semestre, cargaHoraria, coordenador, prerequisitoId, correquisitoId } =
-    req.body;
+  try {
+    const { nome, codigo, semestre, cargaHoraria, coordenador, prerequisitoId, correquisitoId } = req.body;
 
-  await Disciplina.create({
-    nome,
-    codigo,
-    semestre,
-    cargaHoraria,
-    coordenador,
-    prerequisitoId: prerequisitoId || null,
-    correquisitoId: correquisitoId || null,
-  });
+    if (!nome || !codigo || !semestre) {
+      return res.redirect(
+        redirectWithMsg("/admin/disciplinas-turmas", "erro", "Preencha nome, código e semestre da disciplina.")
+      );
+    }
 
-  res.redirect("/admin/disciplinas-turmas");
+    await Disciplina.create({
+      nome: String(nome).trim(),
+      codigo: String(codigo).trim().toUpperCase(),
+      semestre: String(semestre).trim(),
+      cargaHoraria: Number(cargaHoraria) || 60,
+      coordenador: coordenador || null,
+      prerequisitoId: prerequisitoId || null,
+      correquisitoId: correquisitoId || null,
+    });
+
+    res.redirect(redirectWithMsg("/admin/disciplinas-turmas", "sucesso", "Disciplina cadastrada."));
+  } catch (error) {
+    console.error("Erro ao criar disciplina:", error);
+    res.redirect(redirectWithMsg("/admin/disciplinas-turmas", "erro", "Erro ao cadastrar disciplina. Verifique se o código já existe."));
+  }
 };
 
 exports.criarTurma = async (req, res) => {
@@ -271,36 +282,50 @@ exports.listarTurmas = async (req, res) => {
 
 exports.formEditarTurma = async (req, res) => {
   const turma = await Turma.findByPk(req.params.id);
-  if (!turma)
+  if (!turma) {
     return res.redirect(
-      redirectWithMsg("/admin/relatorios/turmas", "erro", "Turma não encontrada.")
+      redirectWithMsg("/admin/disciplinas-turmas", "erro", "Turma não encontrada.")
     );
-  res.render("admin/editar-turma", { turma, erro: req.query.erro });
+  }
+
+  res.render("admin/editar-turma", {
+    turma,
+    origem: req.query.origem || "disciplinas-turmas",
+    erro: req.query.erro,
+  });
 };
 
 exports.editarTurma = async (req, res) => {
-  const { nome, disciplina, professor, sala, dias, horario, vagas, vagasOcupadas, ativa } =
-    req.body;
-  await Turma.update(
-    {
-      nome,
-      disciplina,
-      professor,
-      sala,
-      dias,
-      horario,
-      vagas: vagas || 0,
-      vagasOcupadas: vagasOcupadas || 0,
-      ativa: ativa === "on",
-    },
-    { where: { id: req.params.id } }
-  );
-  res.redirect(redirectWithMsg("/admin/relatorios/turmas", "sucesso", "Turma atualizada."));
-};
+  try {
+    const { nome, disciplina, professor, sala, dias, horario, vagas, vagasOcupadas, ativa, origem } = req.body;
+    const destino = origem === "relatorios" ? "/admin/relatorios/turmas" : "/admin/disciplinas-turmas";
 
-exports.excluirTurma = async (req, res) => {
-  await Turma.destroy({ where: { id: req.params.id } });
-  res.redirect(redirectWithMsg("/admin/relatorios/turmas", "sucesso", "Turma excluída."));
+    if (!nome || !disciplina || !professor || !dias || !horario) {
+      return res.redirect(
+        redirectWithMsg(`/admin/turmas/${req.params.id}/editar`, "erro", "Preencha nome, disciplina, professor, dias e horário.")
+      );
+    }
+
+    await Turma.update(
+      {
+        nome: String(nome).trim(),
+        disciplina: String(disciplina).trim(),
+        professor: String(professor).trim(),
+        sala: sala || null,
+        dias,
+        horario,
+        vagas: Number(vagas) || 0,
+        vagasOcupadas: Number(vagasOcupadas) || 0,
+        ativa: ativa === "on",
+      },
+      { where: { id: req.params.id } }
+    );
+
+    res.redirect(redirectWithMsg(destino, "sucesso", "Turma atualizada."));
+  } catch (error) {
+    console.error("Erro ao editar turma:", error);
+    res.redirect(redirectWithMsg(`/admin/turmas/${req.params.id}/editar`, "erro", "Erro ao atualizar turma."));
+  }
 };
 
 exports.relatorioCargaDocente = async (req, res) => {
@@ -319,4 +344,116 @@ exports.relatorioCargaDocente = async (req, res) => {
 
 exports.configuracoes = (req, res) => {
   res.render("admin/configuracoes");
+};
+
+exports.formEditarDisciplina = async (req, res) => {
+  const disciplina = await Disciplina.findByPk(req.params.id, {
+    include: ["prerequisito", "correquisito"],
+  });
+
+  if (!disciplina) {
+    return res.redirect(
+      redirectWithMsg("/admin/disciplinas-turmas", "erro", "Disciplina não encontrada.")
+    );
+  }
+
+  const disciplinas = await Disciplina.findAll({
+    where: {
+      id: { [Op.ne]: req.params.id },
+    },
+    order: [["nome", "ASC"]],
+  });
+
+  res.render("admin/editar-disciplina", {
+    disciplina,
+    disciplinas,
+    erro: req.query.erro,
+  });
+};
+
+exports.editarDisciplina = async (req, res) => {
+  try {
+    const { nome, codigo, semestre, cargaHoraria, coordenador, prerequisitoId, correquisitoId } = req.body;
+
+    if (!nome || !codigo || !semestre) {
+      return res.redirect(
+        redirectWithMsg(`/admin/disciplinas/${req.params.id}/editar`, "erro", "Preencha nome, código e semestre.")
+      );
+    }
+
+    await Disciplina.update(
+      {
+        nome: String(nome).trim(),
+        codigo: String(codigo).trim().toUpperCase(),
+        semestre: String(semestre).trim(),
+        cargaHoraria: Number(cargaHoraria) || 60,
+        coordenador: coordenador || null,
+        prerequisitoId: prerequisitoId || null,
+        correquisitoId: correquisitoId || null,
+      },
+      { where: { id: req.params.id } }
+    );
+
+    res.redirect(
+      redirectWithMsg("/admin/disciplinas-turmas", "sucesso", "Disciplina atualizada.")
+    );
+  } catch (error) {
+    console.error("Erro ao editar disciplina:", error);
+    res.redirect(
+      redirectWithMsg(`/admin/disciplinas/${req.params.id}/editar`, "erro", "Erro ao atualizar disciplina. Verifique se o código já existe.")
+    );
+  }
+};
+
+
+exports.excluirDisciplina = async (req, res) => {
+  try {
+    const disciplina = await Disciplina.findByPk(req.params.id);
+    if (!disciplina) {
+      return res.redirect(
+        redirectWithMsg("/admin/disciplinas-turmas", "erro", "Disciplina não encontrada.")
+      );
+    }
+
+    await Disciplina.update(
+      { prerequisitoId: null },
+      { where: { prerequisitoId: req.params.id } }
+    );
+    await Disciplina.update(
+      { correquisitoId: null },
+      { where: { correquisitoId: req.params.id } }
+    );
+    await Turma.destroy({ where: { disciplina: disciplina.nome } });
+    await Disciplina.destroy({ where: { id: req.params.id } });
+
+    res.redirect(
+      redirectWithMsg("/admin/disciplinas-turmas", "sucesso", "Disciplina excluída.")
+    );
+  } catch (error) {
+    console.error("Erro ao excluir disciplina:", error);
+    res.redirect(
+      redirectWithMsg("/admin/disciplinas-turmas", "erro", "Erro ao excluir disciplina.")
+    );
+  }
+};
+
+exports.excluirTurma = async (req, res) => {
+  const destino = req.originalUrl.includes("/relatorios/")
+    ? "/admin/relatorios/turmas"
+    : "/admin/disciplinas-turmas";
+
+  try {
+    await Turma.destroy({
+      where: { id: req.params.id },
+    });
+
+    res.redirect(
+      redirectWithMsg(destino, "sucesso", "Turma excluída.")
+    );
+  } catch (error) {
+    console.error("Erro ao excluir turma:", error);
+    res.redirect(
+      redirectWithMsg(destino, "erro", "Erro ao excluir turma.")
+    );
+  }
 };

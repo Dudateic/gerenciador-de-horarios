@@ -8,18 +8,7 @@
 </head>
 <body>
 <div class="container">
-  <aside class="sidebar">
-    <div class="logo">Horários</div>
-    <nav class="menu">
-      <a href="/aluno/vitrine">Vitrine</a>
-      <a href="/aluno/cronograma">Meu Semestre</a>
-      <a href="/aluno/grades">Grades</a>
-      <a href="/aluno/matriculas">Matrículas</a>
-      <a href="/aluno/financeiro">Financeiro</a>
-      <a class="active" href="/aluno/fluxograma">Fluxograma</a>
-    </nav>
-    <div class="sidebar-user"><strong><%= aluno ? aluno.nome : "Aluno" %></strong><span>Engenharia de Computação</span></div>
-  </aside>
+  <%- include('../partials/aluno-sidebar') %>
   <main class="content">
     <header class="topbar"><div><h1>Fluxograma do Curso</h1><p>Acompanhe sua evolução nas disciplinas.</p></div><select><option>2026.1</option></select></header>
     <section class="flow-stats">
@@ -55,7 +44,6 @@
       </section>
       <aside class="flow-side">
         <div class="side-panel"><h3>Legenda</h3><div class="legend-row"><span class="legend-dot green"></span>Concluída</div><div class="legend-row"><span class="legend-dot blue"></span>Em andamento</div><div class="legend-row"><span class="legend-dot yellow"></span>Disponível</div><div class="legend-row"><span class="legend-dot gray"></span>Bloqueada/Pendente</div><div class="legend-row">→ Pré-requisito</div><div class="legend-row">··· Correquisito</div></div>
-        <div class="side-panel"><h3>Ações</h3><a class="action-main" href="/aluno/fluxograma">Atualizar progresso</a><a class="action-link" href="/aluno/cronograma">Ver minha grade ›</a><a class="action-link" href="/aluno/matriculas">Montar matrícula ›</a></div>
       </aside>
     </div>
   </main>
