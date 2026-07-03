@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Conta | Horários</title>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+
+<main class="login-container">
+
+    <section class="login-card cadastro-card">
+
+        <h1>Criar conta</h1>
+
+        <p>Preencha os dados abaixo para criar sua conta.</p>
+
+        <% if (typeof erro !== 'undefined' && erro) { %>
+            <div class="login-error"><%= erro %></div>
+        <% } %>
+
+        <% if (typeof sucesso !== 'undefined' && sucesso) { %>
+            <div class="login-success"><%= sucesso %></div>
+        <% } %>
+
+        <form action="/cadastro" method="POST">
+
+            <label for="nome">Nome completo</label>
+            <input
+                id="nome"
+                name="nome"
+                type="text"
+                placeholder="Digite seu nome completo"
+                required
+            >
+
+            <label for="email">E-mail</label>
+            <input
+                id="email"
+                name="email"
+                type="email"
+                placeholder="seuemail@exemplo.com"
+                required
+            >
+
+            <label for="matricula">Matrícula</label>
+            <input
+            id="matricula"
+            name="matricula"
+            type="text"
+            placeholder="Digite sua matrícula"
+            required
+            >
+            
+            <label for="curso">Curso</label>
+            <input
+            id="curso"
+            name="curso"
+            type="text"
+            placeholder="Ex.: Engenharia de Computação"
+            required
+            >
+            
+            <label for="semestre">Semestre</label>
+            <input
+            id="semestre"
+            name="semestre"
+            type="text"
+            placeholder="Ex.: 2026.1"
+            required
+            >
+            
+            <label for="senha">Senha</label>
+            <input
+            id="senha"
+            name="senha"
+            type="password"
+            placeholder="Mínimo de 6 caracteres"
+            minlength="6"
+            required
+            >
+            
+            <label for="confirmarSenha">Confirmar senha</label>
+            <input
+            id="confirmarSenha"
+            name="confirmarSenha"
+            type="password"
+            placeholder="Digite novamente sua senha"
+            minlength="6"
+            required
+            >
+            <input type="hidden" id="perfil" name="perfil" value="aluno">
+
+            <button type="submit">
+                Criar conta
+            </button>
+
+            <div class="admin-box">
+
+                <p class="admin-register">
+                    Vai criar uma conta de administrador?
+                    <a href="#" onclick="toggleAdmin(); return false;">
+                        Informar código
+                    </a>
+                </p>
+
+                <div id="adminFields" class="admin-fields" style="display: none;">
+
+                    <label for="codigoAdmin">
+                        Código de autorização
+                    </label>
+
+                    <input
+                        id="codigoAdmin"
+                        name="codigoAdmin"
+                        type="password"
+                        placeholder="Digite o código recebido"
+                    >
+
+                    <small>
+                        Esse código é fornecido apenas aos administradores autorizados.
+                    </small>
+
+                </div>
+
+            </div>
+
+            </form>
+
+            <div class="login-links">
+                <span>Já possui uma conta?</span>
+                <a href="/">Entrar</a>
+            </div>
+
+            </section>
+
+            </main>
+
+            <script>
+            function toggleAdmin() {
+                const area = document.getElementById("adminFields");
+                const perfil = document.getElementById("perfil");
+
+                if (area.style.display === "none") {
+                    area.style.display = "block";
+                    perfil.value = "admin";
+                } else {
+                    area.style.display = "none";
+                    perfil.value = "aluno";
+                    document.getElementById("codigoAdmin").value = "";
+                }
+            }
+    </script>
+</body>
+</html>
