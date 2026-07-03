@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Vitrine</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <div class="logo">Horários</div>
+        <nav class="menu">
+          <a class="active" href="/aluno/vitrine">Vitrine</a>
+          <a href="/aluno/cronograma">Meu Semestre</a>
+          <a href="/aluno/grades">Grades</a>
+          <a href="/aluno/matriculas">Matrículas</a>
+          <a href="/aluno/financeiro">Financeiro</a>
+          <a href="/aluno/fluxograma">Fluxograma</a>
+        </nav>
+      </aside>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Vitrine de Disciplinas</h1>
+            <p>Explore disciplinas e turmas disponíveis.</p>
+          </div>
+        </header>
+        <section class="cards">
+          <div class="card">
+            <span>Disciplinas</span>
+            <strong><%= disciplinas.length %></strong>
+            <small>cadastradas</small>
+          </div>
+          <div class="card">
+            <span>Turmas</span>
+            <strong><%= turmas.length %></strong>
+            <small>ativas</small>
+          </div>
+          <div class="card">
+            <span>Curso</span>
+            <strong>EC</strong>
+            <small>Eng. Computação</small>
+          </div>
+          <div class="card">
+            <span>Semestre</span>
+            <strong>2026.1</strong>
+            <small>atual</small>
+          </div>
+        </section>
+        <div class="panel">
+          <input class="search-input" type="text" placeholder="Buscar disciplina..." />
+          <div class="discipline-list">
+            <% if (!turmas || turmas.length === 0) { %>
+            <p>Nenhuma turma disponível.</p>
+            <% } else { %><% turmas.forEach(turma => { %>
+            <div class="discipline-card">
+              <div>
+                <strong><%= turma.disciplina || turma.nome %></strong>
+                <span>
+                  <%= turma.professor || "-" %> • <%= turma.dias || "-" %> • <%= turma.horario ||
+                  "-" %> • <%= turma.sala || "-" %>
+                </span>
+              </div>
+              <a href="/aluno/matriculas">›</a>
+            </div>
+            <% }) %><% } %>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

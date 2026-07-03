@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Meu Cronograma</title>
+    <link rel="stylesheet" href="/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside class="sidebar">
+        <div class="logo">Horários</div>
+        <nav class="menu">
+          <a href="/aluno/vitrine">Vitrine</a>
+          <a class="active" href="/aluno/cronograma">Meu Semestre</a>
+          <a href="/aluno/grades">Grades</a>
+          <a href="/aluno/matriculas">Matrículas</a>
+          <a href="/aluno/financeiro">Financeiro</a>
+          <a href="/aluno/fluxograma">Fluxograma</a>
+        </nav>
+      </aside>
+      <main class="content">
+        <header class="topbar">
+          <div>
+            <h1>Meu Cronograma</h1>
+            <p>Seu horário pessoal de aulas.</p>
+          </div>
+        </header>
+        <section class="cards">
+          <div class="card">
+            <span>Carga semanal</span>
+            <strong><%= cargaSemanal %>h</strong>
+            <small>matriculadas</small>
+          </div>
+          <div class="card">
+            <span>Turmas</span>
+            <strong><%= turmas.length %></strong>
+            <small>na sua grade</small>
+          </div>
+          <div class="card">
+            <span>Curso</span>
+            <strong>EC</strong>
+            <small>Eng. Computação</small>
+          </div>
+          <div class="card">
+            <span>Semestre</span>
+            <strong>2026.1</strong>
+            <small>atual</small>
+          </div>
+        </section>
+        <div class="panel">
+          <h3>Grade semanal</h3>
+          <div class="table-wrapper">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Disciplina</th>
+                  <th>Professor</th>
+                  <th>Dias</th>
+                  <th>Horário</th>
+                  <th>Sala</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% if (!turmas || turmas.length === 0) { %>
+                <tr>
+                  <td colspan="5">
+                    Nenhuma turma na sua grade. Vá em Matrículas para adicionar disciplinas.
+                  </td>
+                </tr>
+                <% } else { %><% turmas.forEach(turma => { %>
+                <tr>
+                  <td>
+                    <span
+                      class="color-dot"
+                      style="background-color: <%= turma.cor || &quot;#2563eb&quot; %>"
+                    ></span>
+                    <%= turma.disciplina || turma.nome %>
+                  </td>
+                  <td><%= turma.professor || "-" %></td>
+                  <td><%= turma.dias || "-" %></td>
+                  <td><%= turma.horario || "-" %></td>
+                  <td><%= turma.sala || "-" %></td>
+                </tr>
+                <% }) %><% } %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

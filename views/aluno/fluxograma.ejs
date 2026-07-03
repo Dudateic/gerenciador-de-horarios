@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Fluxograma do Curso</title>
+  <link rel="stylesheet" href="/css/dashboard.css">
+  <link rel="stylesheet" href="/css/fluxograma.css">
+</head>
+<body>
+<div class="container">
+  <aside class="sidebar">
+    <div class="logo">Horários</div>
+    <nav class="menu">
+      <a href="/aluno/vitrine">Vitrine</a>
+      <a href="/aluno/cronograma">Meu Semestre</a>
+      <a href="/aluno/grades">Grades</a>
+      <a href="/aluno/matriculas">Matrículas</a>
+      <a href="/aluno/financeiro">Financeiro</a>
+      <a class="active" href="/aluno/fluxograma">Fluxograma</a>
+    </nav>
+    <div class="sidebar-user"><strong><%= aluno ? aluno.nome : "Aluno" %></strong><span>Engenharia de Computação</span></div>
+  </aside>
+  <main class="content">
+    <header class="topbar"><div><h1>Fluxograma do Curso</h1><p>Acompanhe sua evolução nas disciplinas.</p></div><select><option>2026.1</option></select></header>
+    <section class="flow-stats">
+      <div class="flow-stat done"><span>Concluídas</span><strong><%= resumo.concluidas %></strong><small>disciplinas</small></div>
+      <div class="flow-stat doing"><span>Em andamento</span><strong><%= resumo.cursando %></strong><small>disciplinas</small></div>
+      <div class="flow-stat pending"><span>Pendentes</span><strong><%= resumo.pendentes %></strong><small>disciplinas</small></div>
+      <div class="flow-stat total"><span>Total</span><strong><%= resumo.total %></strong><small>disciplinas</small></div>
+    </section>
+    <div class="flow-main">
+      <section class="flow-card-panel">
+        <div class="flow-panel-header"><h3>Fluxograma do Curso</h3><button class="flow-tab active">Fluxo</button></div>
+        <div class="course-flow">
+          <% for(let sem = 1; sem <= 10; sem++) { %>
+            <% const lista = disciplinas.filter(d => Number(d.semestre) === sem); %>
+            <% if(lista.length > 0) { %>
+              <div class="flow-semester"><div class="flow-semester-title"><%= sem %>º Semestre</div><div class="flow-subjects">
+                <% lista.forEach(disciplina => { %>
+                  <div class="subject-box <%= disciplina.status === 'CONCLUIDA' ? 'subject-done' : '' %> <%= disciplina.status === 'CURSANDO' ? 'subject-doing' : '' %> <%= disciplina.status === 'PENDENTE' && disciplina.podeCursar ? 'subject-next' : '' %> <%= disciplina.status === 'PENDENTE' && !disciplina.podeCursar ? 'subject-pending' : '' %>">
+                    <strong><%= disciplina.nome %></strong><span><%= disciplina.codigo %></span>
+                    <% if(disciplina.prerequisito) { %><small>Pré: <%= disciplina.prerequisito.nome %></small><% } %>
+                    <% if(disciplina.correquisito) { %><small>Co: <%= disciplina.correquisito.nome %></small><% } %>
+                    <form action="/aluno/fluxograma/status" method="POST">
+                      <input type="hidden" name="disciplinaId" value="<%= disciplina.id %>">
+                      <select name="status"><option value="PENDENTE" <%= disciplina.status === "PENDENTE" ? "selected" : "" %>>Pendente</option><option value="CURSANDO" <%= disciplina.status === "CURSANDO" ? "selected" : "" %>>Cursando</option><option value="CONCLUIDA" <%= disciplina.status === "CONCLUIDA" ? "selected" : "" %>>Concluída</option></select>
+                      <button type="submit">✓</button>
+                    </form>
+                  </div>
+                <% }) %>
+              </div></div>
+            <% } %>
+          <% } %>
+        </div>
+      </section>
+      <aside class="flow-side">
+        <div class="side-panel"><h3>Legenda</h3><div class="legend-row"><span class="legend-dot green"></span>Concluída</div><div class="legend-row"><span class="legend-dot blue"></span>Em andamento</div><div class="legend-row"><span class="legend-dot yellow"></span>Disponível</div><div class="legend-row"><span class="legend-dot gray"></span>Bloqueada/Pendente</div><div class="legend-row">→ Pré-requisito</div><div class="legend-row">··· Correquisito</div></div>
+        <div class="side-panel"><h3>Ações</h3><a class="action-main" href="/aluno/fluxograma">Atualizar progresso</a><a class="action-link" href="/aluno/cronograma">Ver minha grade ›</a><a class="action-link" href="/aluno/matriculas">Montar matrícula ›</a></div>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>
