@@ -1,0 +1,42 @@
+<aside class="sidebar">
+  <div class="logo">Horários</div>
+  <nav class="menu">
+    <a class="<%= currentPath === '/admin/dashboard' ? 'active' : '' %>" href="/admin/dashboard">
+      Dashboard
+    </a>
+    <a
+      class="<%= currentPath.startsWith('/admin/professores') ? 'active' : '' %>"
+      href="/admin/professores"
+    >
+      Professores
+    </a>
+    <a
+      class="<%= currentPath.startsWith('/admin/disciplinas-turmas') ? 'active' : '' %>"
+      href="/admin/disciplinas-turmas"
+    >
+      Disciplinas
+    </a>
+    <a
+      class="<%= currentPath.startsWith('/admin/estudantes') ? 'active' : '' %>"
+      href="/admin/estudantes"
+    >
+      Estudantes
+    </a>
+    <a
+      class="<%= currentPath.startsWith('/admin/relatorios') ? 'active' : '' %>"
+      href="/admin/relatorios/carga-docente"
+    >
+      Relatórios
+    </a>
+    <a
+      class="<%= currentPath.startsWith('/admin/configuracoes') ? 'active' : '' %>"
+      href="/admin/configuracoes"
+    >
+      Configurações
+    </a>
+  </nav>
+  <div class="sidebar-user">
+    <strong>Admin</strong>
+    <span>Administrador</span>
+  </div>
+</aside>
