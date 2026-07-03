@@ -7,17 +7,7 @@
   </head>
   <body>
     <div class="container">
-      <aside class="sidebar">
-        <div class="logo">Horários</div>
-        <nav class="menu">
-          <a href="/aluno/vitrine">Vitrine</a>
-          <a class="active" href="/aluno/cronograma">Meu Semestre</a>
-          <a href="/aluno/grades">Grades</a>
-          <a href="/aluno/matriculas">Matrículas</a>
-          <a href="/aluno/financeiro">Financeiro</a>
-          <a href="/aluno/fluxograma">Fluxograma</a>
-        </nav>
-      </aside>
+      <%- include('../partials/aluno-sidebar') %>
       <main class="content">
         <header class="topbar">
           <div>
@@ -72,7 +62,7 @@
                   <td>
                     <span
                       class="color-dot"
-                      style="background-color: <%= turma.cor || &quot;#2563eb&quot; %>"
+                      style="background-color: <%= turma.cor || '#2563eb' %>"
                     ></span>
                     <%= turma.disciplina || turma.nome %>
                   </td>
