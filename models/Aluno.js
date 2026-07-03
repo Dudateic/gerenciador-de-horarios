@@ -8,6 +8,8 @@ const Aluno = sequelize.define("Aluno", {
   curso: { type: DataTypes.STRING, defaultValue: "Engenharia de Computação" },
   semestre: { type: DataTypes.STRING, allowNull: true },
   ativo: { type: DataTypes.BOOLEAN, defaultValue: true },
+  senha: { type: DataTypes.STRING, allowNull: true },
+  resetToken: { type: DataTypes.STRING, allowNull: true },
 });
 
 module.exports = Aluno;
