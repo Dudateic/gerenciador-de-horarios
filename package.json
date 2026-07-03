@@ -1,1 +1,23 @@
-{"name":"gerenciador-de-horarios","version":"1.0.0","description":"Sistema de gerenciamento de horários acadêmicos","main":"app.js","scripts":{"start":"node app.js","dev":"node app.js","seed":"psql -U postgres -d horarios_db -f sql/seed.sql"},"dependencies":{"dotenv":"^17.2.3","ejs":"^3.1.10","express":"^5.1.0","pg":"^8.16.3","pg-hstore":"^2.3.4","sequelize":"^6.37.7"},"devDependencies":{"prettier":"^3.9.4"}}
+{
+  "name": "gerenciador-de-horarios",
+  "version": "1.0.0",
+  "description": "Sistema de gerenciamento de horários acadêmicos",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "node app.js",
+    "seed": "psql -U ${DB_USER:-postgres} -d ${DB_NAME:-horarios_db} -f sql/seed.sql",
+    "admin:key": "node scripts/admin-key.js"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "pg": "^8.16.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "prettier": "^3.9.4"
+  }
+}

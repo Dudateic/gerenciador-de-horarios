@@ -5,6 +5,7 @@ const path = require("path");
 const sequelize = require("./config/database");
 
 require("./models/Aluno");
+require("./models/Admin");
 require("./models/Professor");
 require("./models/Disciplina");
 require("./models/Turma");
@@ -15,6 +16,7 @@ require("./models/Progresso");
 const authRoutes = require("./routes/authRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const alunoRoutes = require("./routes/alunoRoutes");
+const { attachUser, requireRole } = require("./middlewares/authMiddleware");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -25,6 +27,7 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+app.use(attachUser);
 
 app.use((req, res, next) => {
   res.locals.currentPath = req.path;
@@ -32,8 +35,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/", authRoutes);
-app.use("/admin", adminRoutes);
-app.use("/aluno", alunoRoutes);
+app.use("/admin", requireRole("admin"), adminRoutes);
+app.use("/aluno", requireRole("aluno"), alunoRoutes);
 
 app.use((req, res) => {
   res.status(404).render("404", { title: "Página não encontrada" });
